@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useCallback } from 'react';
@@ -8,7 +9,6 @@ import StartMenu from '../components/StartMenu/StartMenu';
 import DesktopShortcut from '../components/Desktop/DesktopShortcut';
 import ContextMenu from '../components/Desktop/ContextMenu';
 import SystemProperties from '../components/Desktop/SystemProperties';
-import { Newspaper, Hammer, GraduationCap, Briefcase, FileText } from 'lucide-react';
 
 interface WindowState {
   id: string;
@@ -83,7 +83,7 @@ export default function Desktop() {
               <strong>Tech Stack:</strong> Next.js 14, TypeScript, PostgreSQL, WebSocket
             </div>
           </div>
-        ), <Briefcase size={16}/>);
+        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico" width={16} height={16} alt="" />);
         break;
       case 'kaonta':
         openApp('kaonta', 'Kaon Ta!', (
@@ -97,12 +97,12 @@ export default function Desktop() {
               <strong>Tech Stack:</strong> React, Node.js, Mapbox, Firebase
             </div>
           </div>
-        ), <Newspaper size={16}/>);
+        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico" width={16} height={16} alt="" />);
         break;
       case 'skills':
         openApp('skills', 'System Properties', (
           <SystemProperties onClose={() => closeWindow('skills')} />
-        ), <Hammer size={16}/>);
+        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico" width={16} height={16} alt="" />);
         break;
       case 'resume':
         openApp('resume', 'Resume - Nico (2026)', (
@@ -121,7 +121,7 @@ export default function Desktop() {
               </div>
             </div>
           </div>
-        ), <FileText size={16}/>);
+        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON19_1.ico" width={16} height={16} alt="" />);
         break;
       case 'portfolio':
         openApp('portfolio', 'Portfolio Gallery', (
@@ -139,7 +139,7 @@ export default function Desktop() {
               ))}
             </div>
           </div>
-        ), <GraduationCap size={16}/>);
+        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico" width={16} height={16} alt="" />);
         break;
     }
   };
@@ -181,25 +181,25 @@ export default function Desktop() {
         <DesktopShortcut 
           id="matchpoint" 
           name="MatchPoint" 
-          fallbackText="M" 
+          iconSrc="/assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico"
           onDoubleClick={handleAppLaunch} 
         />
         <DesktopShortcut 
           id="kaonta" 
           name="Kaon Ta!" 
-          fallbackText="K" 
+          iconSrc="/assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico"
           onDoubleClick={handleAppLaunch} 
         />
         <DesktopShortcut 
           id="skills" 
           name="System Properties" 
-          fallbackText="S" 
+          iconSrc="/assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico"
           onDoubleClick={handleAppLaunch} 
         />
         <DesktopShortcut 
           id="resume" 
           name="Resume" 
-          fallbackText="R" 
+          iconSrc="/assets/Icons/Windows Vista/ico/imageres.dll/ICON19_1.ico"
           onDoubleClick={handleAppLaunch} 
         />
       </div>
