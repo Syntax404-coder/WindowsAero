@@ -1,0 +1,105 @@
+.contextMenuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9000;
+}
+
+.contextMenu {
+  position: fixed;
+  min-width: 220px;
+  background: rgba(240, 245, 252, 0.96);
+  border: 1px solid rgba(100, 140, 190, 0.5);
+  border-radius: 4px;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    0 1px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 3px 0;
+  z-index: 9001;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: menuFadeIn 0.1s ease-out;
+}
+
+@keyframes menuFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 28px 6px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 12px;
+  color: #1a1a1a;
+  text-align: left;
+  transition: all 0.06s ease;
+}
+
+.menuItem:hover {
+  background: linear-gradient(180deg, #3c8ee8 0%, #2a6fc9 100%);
+  color: #fff;
+  border-color: rgba(30, 80, 160, 0.6);
+  border-radius: 2px;
+}
+
+.menuItem:hover .menuIcon {
+  color: #fff;
+}
+
+.menuIcon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.menuLabel {
+  flex: 1;
+}
+
+.menuShortcut {
+  font-size: 11px;
+  color: #888;
+  margin-left: auto;
+}
+
+.menuItem:hover .menuShortcut {
+  color: rgba(255,255,255,0.7);
+}
+
+.separator {
+  height: 1px;
+  margin: 3px 8px;
+  background: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.disabled {
+  color: #aaa !important;
+  cursor: default !important;
+}
+
+.disabled:hover {
+  background: transparent !important;
+  color: #aaa !important;
+  border-color: transparent !important;
+}

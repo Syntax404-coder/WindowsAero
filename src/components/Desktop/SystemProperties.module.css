@@ -1,0 +1,295 @@
+.systemProperties {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: #f0f0f0;
+}
+
+/* Tab Bar */
+.tabBar {
+  display: flex;
+  gap: 0;
+  padding: 8px 12px 0;
+  background: linear-gradient(180deg, #f4f4f4 0%, #ececec 100%);
+  border-bottom: 1px solid #999;
+}
+
+.tab {
+  padding: 6px 16px;
+  font-size: 12px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(180deg, #f0f0f0 0%, #ddd 100%);
+  border: 1px solid #999;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  color: #333;
+  position: relative;
+  top: 1px;
+  margin-right: 2px;
+  transition: all 0.1s ease;
+}
+
+.tab:hover {
+  background: linear-gradient(180deg, #e8f0fb 0%, #d4e6f7 100%);
+}
+
+.activeTab {
+  background: #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  font-weight: 600;
+  color: #000;
+  z-index: 1;
+}
+
+/* Tab Content */
+.tabContent {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* General Tab */
+.generalTab {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.windowsLogo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+.logoIcon {
+  width: 64px;
+  height: 64px;
+  background: var(--aero-start-gradient);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.4);
+}
+
+.logoText h2 {
+  font-size: 18px;
+  font-weight: 300;
+  color: #1560b8;
+  margin: 0;
+}
+
+.logoText p {
+  font-size: 11px;
+  color: #666;
+  margin: 2px 0 0;
+}
+
+.edition {
+  font-size: 22px !important;
+  font-weight: 300 !important;
+  color: #333 !important;
+}
+
+.systemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infoRow {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #333;
+}
+
+.infoLabel {
+  width: 110px;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.infoValue {
+  font-weight: 500;
+  color: #222;
+}
+
+/* Certifications Tab */
+.certTab {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.certCard {
+  background: #fff;
+  border: 1px solid #c8d6e5;
+  border-radius: 6px;
+  padding: 14px;
+  display: flex;
+  gap: 14px;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.certCard:hover {
+  border-color: #90b8e0;
+  box-shadow: 0 2px 8px rgba(21, 96, 184, 0.15);
+}
+
+.certIconWrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.certIconDevops {
+  background: linear-gradient(135deg, #2196f3, #0d47a1);
+  color: #fff;
+}
+
+.certIconAi {
+  background: linear-gradient(135deg, #9c27b0, #4a148c);
+  color: #fff;
+}
+
+.certIconFullstack {
+  background: linear-gradient(135deg, #4caf50, #1b5e20);
+  color: #fff;
+}
+
+.certInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.certTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.certDesc {
+  font-size: 11px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.certTags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.certTag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #e8f0fb;
+  color: #1560b8;
+  border: 1px solid #c0d8f0;
+  font-weight: 500;
+}
+
+/* Skills Tab */
+.skillsTab {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skillRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.skillHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.skillName {
+  font-weight: 600;
+  color: #333;
+}
+
+.skillPercent {
+  color: #666;
+  font-size: 11px;
+}
+
+.skillBarOuter {
+  height: 18px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  border: 1px solid #bbb;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.skillBarInner {
+  height: 100%;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #6dd5f5 0%, #1560b8 50%, #0a3478 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.skillBarInner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+  border-radius: 9px 9px 0 0;
+}
+
+/* Footer */
+.dialogFooter {
+  padding: 10px 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  border-top: 1px solid #ccc;
+  background: #f0f0f0;
+}
+
+.dialogBtn {
+  padding: 5px 20px;
+  font-size: 12px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #f8f8f8 0%, #e0e0e0 100%);
+  cursor: pointer;
+  color: #333;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  transition: all 0.1s ease;
+}
+
+.dialogBtn:hover {
+  background: linear-gradient(180deg, #e8f0fb 0%, #d4e6f7 100%);
+  border-color: #88b0d8;
+}
+
+.dialogBtn:active {
+  background: linear-gradient(180deg, #d0dce8 0%, #b8c8d8 100%);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+}

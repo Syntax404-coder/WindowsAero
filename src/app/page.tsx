@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styles from './page.module.css';
 import Window from '../components/Desktop/Window';
 import Taskbar from '../components/Taskbar/Taskbar';
 import StartMenu from '../components/StartMenu/StartMenu';
 import DesktopShortcut from '../components/Desktop/DesktopShortcut';
+import ContextMenu from '../components/Desktop/ContextMenu';
+import SystemProperties from '../components/Desktop/SystemProperties';
 import { Newspaper, Hammer, GraduationCap, Briefcase, FileText } from 'lucide-react';
 
 interface WindowState {
@@ -17,9 +19,16 @@ interface WindowState {
   icon?: React.ReactNode;
 }
 
+interface ContextMenuState {
+  visible: boolean;
+  x: number;
+  y: number;
+}
+
 export default function Desktop() {
   const [windows, setWindows] = useState<WindowState[]>([]);
   const [startOpen, setStartOpen] = useState(false);
+  const [contextMenu, setContextMenu] = useState<ContextMenuState>({ visible: false, x: 0, y: 0 });
 
   const focusWindow = (id: string) => {
     setWindows(prev => prev.map(win => ({
@@ -46,16 +55,14 @@ export default function Desktop() {
   };
 
   const openApp = (appId: string, title: string, content: React.ReactNode, icon?: React.ReactNode) => {
-    setStartOpen(false); // Close start menu when opening app
+    setStartOpen(false);
     
-    // Check if already open
     const existing = windows.find(w => w.id === appId);
     if (existing) {
       focusWindow(appId);
       return;
     }
 
-    // Add new window
     setWindows(prev => [
       ...prev.map(w => ({ ...w, isFocused: false })),
       { id: appId, title, isFocused: true, isMinimized: false, content, icon }
@@ -65,35 +72,109 @@ export default function Desktop() {
   const handleAppLaunch = (id: string) => {
     switch(id) {
       case 'matchpoint':
-        openApp('matchpoint', 'MatchPoint', <div style={{padding: 20}}>MatchPoint Desktop Application (Next.js 14)</div>, <Briefcase size={16}/>);
+        openApp('matchpoint', 'MatchPoint', (
+          <div style={{padding: 20}}>
+            <h2 style={{margin: '0 0 12px', color: '#1560b8'}}>MatchPoint</h2>
+            <p style={{color: '#555', lineHeight: 1.6}}>
+              A Next.js 14 desktop application built for competitive matchmaking and team coordination.
+              Features real-time updates, player statistics, and tournament bracket management.
+            </p>
+            <div style={{marginTop: 16, padding: 12, background: '#f0f5fa', borderRadius: 4, border: '1px solid #c8d6e5'}}>
+              <strong>Tech Stack:</strong> Next.js 14, TypeScript, PostgreSQL, WebSocket
+            </div>
+          </div>
+        ), <Briefcase size={16}/>);
         break;
       case 'kaonta':
-        openApp('kaonta', 'Kaon Ta!', <div style={{padding: 20}}>Kaon Ta! Regional Food Service Mapping</div>, <Newspaper size={16}/>);
+        openApp('kaonta', 'Kaon Ta!', (
+          <div style={{padding: 20}}>
+            <h2 style={{margin: '0 0 12px', color: '#e65100'}}>Kaon Ta!</h2>
+            <p style={{color: '#555', lineHeight: 1.6}}>
+              A regional food service mapping platform connecting local restaurants and food vendors
+              with customers. Features interactive maps, menu listings, and order tracking.
+            </p>
+            <div style={{marginTop: 16, padding: 12, background: '#fff3e0', borderRadius: 4, border: '1px solid #ffe0b2'}}>
+              <strong>Tech Stack:</strong> React, Node.js, Mapbox, Firebase
+            </div>
+          </div>
+        ), <Newspaper size={16}/>);
         break;
       case 'skills':
-        openApp('skills', 'System Properties - Skills', (
-          <div style={{padding: 20}}>
-            <h3>Technical Certifications</h3>
-            <ul>
-              <li>DevOps Engineering (Docker, CI/CD)</li>
-              <li>AI Specialization (GPT, Prompt Engineering, Agentic Mode)</li>
-            </ul>
-          </div>
+        openApp('skills', 'System Properties', (
+          <SystemProperties onClose={() => closeWindow('skills')} />
         ), <Hammer size={16}/>);
         break;
       case 'resume':
-        openApp('resume', 'Resume - Nico (2026)', <div style={{padding: 20}}>Software Engineer - AI Major</div>, <FileText size={16}/>);
+        openApp('resume', 'Resume - Nico (2026)', (
+          <div style={{padding: 20}}>
+            <h2 style={{margin: '0 0 8px', color: '#2e7d32'}}>Nico</h2>
+            <p style={{color: '#777', fontSize: 13, marginBottom: 16}}>Software Engineer — AI Major, WVSU 2026</p>
+            <div style={{display: 'flex', flexDirection: 'column', gap: 12}}>
+              <div style={{padding: 12, background: '#f0f5fa', borderRadius: 4, border: '1px solid #c8d6e5'}}>
+                <strong>Education:</strong> West Visayas State University — BS in Computer Science, AI Major
+              </div>
+              <div style={{padding: 12, background: '#f0f5fa', borderRadius: 4, border: '1px solid #c8d6e5'}}>
+                <strong>Focus Areas:</strong> Full Stack Development, DevOps, AI/ML Engineering
+              </div>
+              <div style={{padding: 12, background: '#f0f5fa', borderRadius: 4, border: '1px solid #c8d6e5'}}>
+                <strong>Tools:</strong> React, Next.js, TypeScript, Python, Docker, GitHub Actions
+              </div>
+            </div>
+          </div>
+        ), <FileText size={16}/>);
         break;
       case 'portfolio':
-        openApp('portfolio', 'Portfolio Gallery', <div style={{padding: 20}}>Visual implementations and case studies</div>, <GraduationCap size={16}/>);
+        openApp('portfolio', 'Portfolio Gallery', (
+          <div style={{padding: 20}}>
+            <h2 style={{margin: '0 0 12px', color: '#c62828'}}>Portfolio Gallery</h2>
+            <p style={{color: '#555', lineHeight: 1.6}}>
+              Visual implementations, case studies, and design explorations showcasing
+              full-stack applications and UI/UX work.
+            </p>
+            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 16}}>
+              {['WindowsAero OS', 'MatchPoint App', 'Kaon Ta! Maps', 'AI Tools Suite'].map(item => (
+                <div key={item} style={{padding: 24, background: '#f5f5f5', borderRadius: 6, border: '1px solid #ddd', textAlign: 'center', fontWeight: 500, color: '#555'}}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        ), <GraduationCap size={16}/>);
         break;
     }
+  };
+
+  /* ── Right-click handler ── */
+  const handleContextMenu = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setStartOpen(false);
+    setContextMenu({ visible: true, x: e.clientX, y: e.clientY });
+  }, []);
+
+  const handleContextAction = useCallback((action: string) => {
+    switch (action) {
+      case 'refresh':
+        window.location.reload();
+        break;
+      case 'personalize':
+        handleAppLaunch('skills');
+        break;
+      default:
+        break;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleDesktopClick = () => {
+    setStartOpen(false);
+    setContextMenu({ visible: false, x: 0, y: 0 });
   };
 
   return (
     <main 
       className={styles.desktop}
-      onClick={() => setStartOpen(false)}
+      onClick={handleDesktopClick}
+      onContextMenu={handleContextMenu}
     >
       {/* Desktop Icons Area */}
       <div className={styles.iconGrid}>
@@ -109,7 +190,29 @@ export default function Desktop() {
           fallbackText="K" 
           onDoubleClick={handleAppLaunch} 
         />
+        <DesktopShortcut 
+          id="skills" 
+          name="System Properties" 
+          fallbackText="S" 
+          onDoubleClick={handleAppLaunch} 
+        />
+        <DesktopShortcut 
+          id="resume" 
+          name="Resume" 
+          fallbackText="R" 
+          onDoubleClick={handleAppLaunch} 
+        />
       </div>
+
+      {/* Right-Click Context Menu */}
+      {contextMenu.visible && (
+        <ContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu({ visible: false, x: 0, y: 0 })}
+          onAction={handleContextAction}
+        />
+      )}
 
       {/* Render Open Windows */}
       {windows.map((win, i) => (
