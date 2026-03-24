@@ -206,54 +206,61 @@ export default function Desktop() {
 
       {/* Right-Click Context Menu */}
       {contextMenu.visible && (
-        <ContextMenu
-          x={contextMenu.x}
-          y={contextMenu.y}
-          onClose={() => setContextMenu({ visible: false, x: 0, y: 0 })}
-          onAction={handleContextAction}
-        />
+        <div onClick={(e) => e.stopPropagation()}>
+          <ContextMenu
+            x={contextMenu.x}
+            y={contextMenu.y}
+            onClose={() => setContextMenu({ visible: false, x: 0, y: 0 })}
+            onAction={handleContextAction}
+          />
+        </div>
       )}
 
       {/* Render Open Windows */}
       {windows.map((win, i) => (
-        <Window
-          key={win.id}
-          id={win.id}
-          title={win.title}
-          icon={win.icon}
-          isFocused={win.isFocused}
-          isMinimized={win.isMinimized}
-          onFocus={() => focusWindow(win.id)}
-          onClose={() => closeWindow(win.id)}
-          onMinimize={() => minimizeWindow(win.id)}
-          defaultPosition={{ x: 100 + i * 30, y: 50 + i * 30 }}
-        >
-          {win.content}
-        </Window>
+        <div key={win.id} onClick={(e) => e.stopPropagation()}>
+          <Window
+            id={win.id}
+            title={win.title}
+            icon={win.icon}
+            isFocused={win.isFocused}
+            isMinimized={win.isMinimized}
+            onFocus={() => focusWindow(win.id)}
+            onClose={() => closeWindow(win.id)}
+            onMinimize={() => minimizeWindow(win.id)}
+            defaultPosition={{ x: 100 + i * 30, y: 50 + i * 30 }}
+          >
+            {win.content}
+          </Window>
+        </div>
       ))}
 
       {/* Taskbar & Start Menu */}
-      <StartMenu 
-        isOpen={startOpen} 
-        onProgramClick={handleAppLaunch}
-        onSystemClick={handleAppLaunch}
-      />
-      
-      <Taskbar
-        windows={windows}
-        isStartOpen={startOpen}
-        onWindowClick={(id) => {
-          const win = windows.find(w => w.id === id);
-          if (win?.isFocused && !win.isMinimized) {
-            minimizeWindow(id);
-          } else {
-            focusWindow(id);
-          }
-        }}
-        onStartClick={() => {
-          toggleStartMenu();
-        }}
-      />
+      <div onClick={(e) => e.stopPropagation()}>
+        <StartMenu 
+          isOpen={startOpen} 
+          onProgramClick={handleAppLaunch}
+          onSystemClick={handleAppLaunch}
+        />
+        
+        <Taskbar
+          windows={windows}
+          isStartOpen={startOpen}
+          onWindowClick={(id, e) => {
+            e.stopPropagation();
+            const win = windows.find(w => w.id === id);
+            if (win?.isFocused && !win.isMinimized) {
+              minimizeWindow(id);
+            } else {
+              focusWindow(id);
+            }
+          }}
+          onStartClick={(e) => {
+            e.stopPropagation();
+            toggleStartMenu();
+          }}
+        />
+      </div>
     </main>
   );
 }

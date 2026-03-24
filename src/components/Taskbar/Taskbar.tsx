@@ -15,8 +15,8 @@ interface WindowState {
 
 interface TaskbarProps {
   windows: WindowState[];
-  onWindowClick: (id: string) => void;
-  onStartClick: () => void;
+  onWindowClick: (id: string, e: React.MouseEvent) => void;
+  onStartClick: (e: React.MouseEvent) => void;
   isStartOpen: boolean;
 }
 
@@ -50,7 +50,7 @@ export default function Taskbar({ windows, onWindowClick, onStartClick, isStartO
         {windows.map((win) => (
           <button
             key={win.id}
-            onClick={() => onWindowClick(win.id)}
+            onClick={(e) => onWindowClick(win.id, e)}
             className={`${styles.taskbarItem} ${win.isFocused && !win.isMinimized ? styles.activeItem : ''}`}
           >
             {win.icon && <span className={styles.itemIcon}>{win.icon}</span>}

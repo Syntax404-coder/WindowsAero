@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import styles from './Taskbar.module.css';
 
 interface StartOrbProps {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
   isOpen: boolean;
 }
 
