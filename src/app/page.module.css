@@ -9,6 +9,7 @@
   background-repeat: no-repeat;
   /* Ultimate fallback if image is missing */
   background-color: #000;
+  user-select: none;
 }
 
 .iconGrid {

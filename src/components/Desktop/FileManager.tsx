@@ -6,12 +6,18 @@ import styles from './FileManager.module.css';
 // Importing native .ico assets
 import ComputerIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import FolderIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON162_1.ico';
-import HDDIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON55_1.ico';
-import DocIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON19_1.ico';
-import PicIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico';
+import HDDIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON305_1.ico';
+import DocIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON123_1.ico';
+import PicIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON113_1.ico';
 import MatchPointIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
 import KaonTaIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import SkillsIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico';
+import ResumeIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON324_1.ico';
+
+import MusicIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON108_1.ico';
+import RecentIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON115_1.ico';
+import SearchIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON18_1.ico';
+import PublicIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON30_1.ico';
 
 // Define the file system types
 type FileType = 'folder' | 'app';
@@ -42,11 +48,15 @@ const fileSystem: FileSystemDict = {
     { id: 'kaonta', name: 'Kaon Ta!.exe', type: 'app', iconSrc: KaonTaIcon.src, targetId: 'kaonta' }
   ],
   'Documents': [
-    { id: 'resume', name: 'Resume.pdf', type: 'app', iconSrc: DocIcon.src, targetId: 'resume' }
+    { id: 'resume', name: 'Resume', type: 'app', iconSrc: ResumeIcon.src, targetId: 'resume' }
   ],
   'Pictures': [
     { id: 'portfolio', name: 'Portfolio.jpeg', type: 'app', iconSrc: PicIcon.src, targetId: 'portfolio' }
-  ]
+  ],
+  'Music': [],
+  'Recently Changed': [],
+  'Searches': [],
+  'Public': []
 };
 
 interface FileManagerProps {
@@ -81,14 +91,6 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
     }
   };
 
-  const traverseUp = () => {
-    const parts = currentPath.split(' > ');
-    if (parts.length > 1) {
-      parts.pop(); // Remove last segment
-      navigateTo(parts.join(' > '));
-    }
-  };
-
   const files = fileSystem[currentPath] || [];
 
   const handleItemDoubleClick = (item: FileItem) => {
@@ -99,19 +101,56 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
     }
   };
 
+  const getPathIcon = () => {
+    if (currentPath === 'Documents') return DocIcon.src;
+    if (currentPath === 'Images') return PicIcon.src;
+    if (currentPath === 'Music') return MusicIcon.src;
+    if (currentPath === 'This PC') return ComputerIcon.src;
+    return FolderIcon.src;
+  };
+
   return (
     <div className={styles.fileManager}>
       {/* Top Address & Navigation Bar */}
       <div className={styles.topBar}>
-        <div className={styles.navButtons}>
-          <button className={styles.navBtn} onClick={goBack} disabled={historyIndex === 0}>←</button>
-          <button className={styles.navBtn} onClick={goForward} disabled={historyIndex === history.length - 1}>→</button>
-          <button className={styles.navBtn} onClick={traverseUp} disabled={!currentPath.includes('>')}>↑</button>
+        <div className={styles.navCluster}>
+          <div className={styles.navCapsule} />
+          <button 
+            className={`${styles.navBtn} ${styles.backBtn} ${historyIndex > 0 ? styles.activeBlue : ''}`} 
+            onClick={goBack} 
+            disabled={historyIndex === 0}
+          >
+            <div className={styles.arrowIcon}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+            </div>
+          </button>
+          <button 
+            className={`${styles.navBtn} ${styles.forwardBtn} ${historyIndex < history.length - 1 ? styles.activeBlue : ''}`} 
+            onClick={goForward} 
+            disabled={historyIndex === history.length - 1}
+          >
+            <div className={styles.arrowIcon}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 19l7-7-7-7" />
+              </svg>
+            </div>
+          </button>
+          <div className={styles.navDropdown} />
         </div>
-        <div className={styles.addressBarContainer}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={FolderIcon.src} width={14} height={14} alt="" className={styles.addressIcon} />
-          <span className={styles.addressPath}>{currentPath}</span>
+
+        <div className={styles.addressBarWrapper}>
+          <div className={styles.addressBarContainer}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={getPathIcon()} width={16} height={16} alt="" className={styles.addressIcon} />
+            <span className={styles.addressPath}>{currentPath.replace(/ > /g, ' ▸ ')}</span>
+          </div>
+          
+          <div className={styles.searchBox}>
+            <img src={SearchIcon.src} width={14} height={14} alt="" />
+            <input type="text" className={styles.searchInput} placeholder="Search" />
+          </div>
         </div>
       </div>
 
@@ -119,6 +158,8 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
       <div className={styles.commandBar}>
         <button className={styles.commandBtn}>Organize ▾</button>
         <button className={styles.commandBtn}>Views ▾</button>
+        <div style={{flex: 1}} />
+        <button className={styles.commandBtn}>?</button>
       </div>
 
       {/* Main Content Area */}
@@ -131,19 +172,35 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
               <img src={DocIcon.src} className={styles.navIcon} alt="" />
               Documents
             </button>
-            <button className={`${styles.navItem} ${currentPath === 'Pictures' ? styles.active : ''}`} onClick={() => navigateTo('Pictures')}>
+            <button className={`${styles.navItem} ${currentPath === 'Images' ? styles.active : ''}`} onClick={() => navigateTo('Images')}>
               <img src={PicIcon.src} className={styles.navIcon} alt="" />
-              Pictures
+              Images
             </button>
-            <button className={`${styles.navItem} ${currentPath === 'This PC' ? styles.active : ''}`} onClick={() => navigateTo('This PC')}>
-              <img src={ComputerIcon.src} className={styles.navIcon} alt="" />
-              This PC
+            <button className={`${styles.navItem} ${currentPath === 'Music' ? styles.active : ''}`} onClick={() => navigateTo('Music')}>
+              <img src={MusicIcon.src} className={styles.navIcon} alt="" />
+              Music
+            </button>
+            <button className={`${styles.navItem} ${currentPath === 'Recently Changed' ? styles.active : ''}`} onClick={() => navigateTo('Recently Changed')}>
+              <img src={RecentIcon.src} className={styles.navIcon} alt="" />
+              Recently Changed
+            </button>
+            <button className={`${styles.navItem} ${currentPath === 'Searches' ? styles.active : ''}`} onClick={() => navigateTo('Searches')}>
+              <img src={SearchIcon.src} className={styles.navIcon} alt="" />
+              Searches
+            </button>
+            <button className={`${styles.navItem} ${currentPath === 'Public' ? styles.active : ''}`} onClick={() => navigateTo('Public')}>
+              <img src={PublicIcon.src} className={styles.navIcon} alt="" />
+              Public
             </button>
           </div>
           
           <div className={styles.navSection}>
             <div className={styles.navHeader}>Folders</div>
-            <button className={styles.navItem} onClick={() => navigateTo('This PC > Local Disk (C:)')}>
+            <button className={`${styles.navItem} ${currentPath === 'This PC' ? styles.active : ''}`} onClick={() => navigateTo('This PC')}>
+              <img src={ComputerIcon.src} className={styles.navIcon} alt="" />
+              This PC
+            </button>
+            <button className={`${styles.navItem} ${currentPath.includes('Local Disk (C:)') ? styles.active : ''}`} onClick={() => navigateTo('This PC > Local Disk (C:)')}>
               <img src={HDDIcon.src} className={styles.navIcon} alt="" />
               Local Disk (C:)
             </button>
@@ -165,15 +222,24 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
               </div>
             ))}
             {files.length === 0 && (
-              <div style={{color: '#777', fontSize: 13, gridColumn: '1 / -1'}}>This folder is empty.</div>
+              <div style={{color: '#777', fontSize: 13, gridColumn: '1 / -1', textAlign: 'center', marginTop: 40}}>
+                <img src={getPathIcon()} width={64} height={64} alt="" style={{opacity: 0.2, marginBottom: 10}} />
+                <div>This folder is empty.</div>
+              </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Status Bar */}
-      <div className={styles.statusBar}>
-        {files.length} item(s)
+      {/* Details Pane */}
+      <div className={styles.detailsPane}>
+        <div className={styles.previewIconContainer}>
+          <img src={getPathIcon()} width={32} height={32} alt="" />
+        </div>
+        <div className={styles.detailsInfo}>
+          <div className={styles.itemCount}>{files.length} item{files.length !== 1 ? 's' : ''}</div>
+          <div className={styles.pathBreadcrumb}>{currentPath.replace(/ > /g, ' \u203A ')}</div>
+        </div>
       </div>
     </div>
   );
