@@ -3,7 +3,7 @@
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background-image: url('/assets/Wallpapers/Windows Vista/Desktop/img24.jpg');
+  background-image: url('../assets/Wallpapers/Windows Vista/Desktop/img24.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

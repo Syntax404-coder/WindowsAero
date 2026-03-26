@@ -9,6 +9,14 @@ import StartMenu from '../components/StartMenu/StartMenu';
 import DesktopShortcut from '../components/Desktop/DesktopShortcut';
 import ContextMenu from '../components/Desktop/ContextMenu';
 import SystemProperties from '../components/Desktop/SystemProperties';
+import FileManager from '../components/Desktop/FileManager';
+
+import MatchPointIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
+import ComputerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
+import KaonTaIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
+import SystemIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico';
+import ResumeIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON19_1.ico';
+import PortfolioIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico';
 
 interface WindowState {
   id: string;
@@ -71,6 +79,11 @@ export default function Desktop() {
 
   const handleAppLaunch = (id: string) => {
     switch(id) {
+      case 'explorer':
+        openApp('explorer', 'This PC', (
+          <FileManager onAppLaunch={handleAppLaunch} />
+        ), <img src={ComputerIcon.src} width={16} height={16} alt="" />);
+        break;
       case 'matchpoint':
         openApp('matchpoint', 'MatchPoint', (
           <div style={{padding: 20}}>
@@ -83,7 +96,7 @@ export default function Desktop() {
               <strong>Tech Stack:</strong> Next.js 14, TypeScript, PostgreSQL, WebSocket
             </div>
           </div>
-        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico" width={16} height={16} alt="" />);
+        ), <img src={MatchPointIcon.src} width={16} height={16} alt="" />);
         break;
       case 'kaonta':
         openApp('kaonta', 'Kaon Ta!', (
@@ -97,12 +110,12 @@ export default function Desktop() {
               <strong>Tech Stack:</strong> React, Node.js, Mapbox, Firebase
             </div>
           </div>
-        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico" width={16} height={16} alt="" />);
+        ), <img src={KaonTaIcon.src} width={16} height={16} alt="" />);
         break;
       case 'skills':
         openApp('skills', 'System Properties', (
           <SystemProperties onClose={() => closeWindow('skills')} />
-        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico" width={16} height={16} alt="" />);
+        ), <img src={SystemIcon.src} width={16} height={16} alt="" />);
         break;
       case 'resume':
         openApp('resume', 'Resume - Nico (2026)', (
@@ -121,7 +134,7 @@ export default function Desktop() {
               </div>
             </div>
           </div>
-        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON19_1.ico" width={16} height={16} alt="" />);
+        ), <img src={ResumeIcon.src} width={16} height={16} alt="" />);
         break;
       case 'portfolio':
         openApp('portfolio', 'Portfolio Gallery', (
@@ -139,7 +152,7 @@ export default function Desktop() {
               ))}
             </div>
           </div>
-        ), <img src="/assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico" width={16} height={16} alt="" />);
+        ), <img src={PortfolioIcon.src} width={16} height={16} alt="" />);
         break;
     }
   };
@@ -179,27 +192,21 @@ export default function Desktop() {
       {/* Desktop Icons Area */}
       <div className={styles.iconGrid}>
         <DesktopShortcut 
-          id="matchpoint" 
-          name="MatchPoint" 
-          iconSrc="/assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico"
-          onDoubleClick={handleAppLaunch} 
-        />
-        <DesktopShortcut 
-          id="kaonta" 
-          name="Kaon Ta!" 
-          iconSrc="/assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico"
+          id="explorer" 
+          name="This PC" 
+          iconSrc={ComputerIcon.src}
           onDoubleClick={handleAppLaunch} 
         />
         <DesktopShortcut 
           id="skills" 
           name="System Properties" 
-          iconSrc="/assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico"
+          iconSrc={SystemIcon.src}
           onDoubleClick={handleAppLaunch} 
         />
         <DesktopShortcut 
           id="resume" 
           name="Resume" 
-          iconSrc="/assets/Icons/Windows Vista/ico/imageres.dll/ICON19_1.ico"
+          iconSrc={ResumeIcon.src}
           onDoubleClick={handleAppLaunch} 
         />
       </div>
@@ -259,6 +266,7 @@ export default function Desktop() {
             e.stopPropagation();
             toggleStartMenu();
           }}
+          onQuickLaunch={handleAppLaunch}
         />
       </div>
     </main>

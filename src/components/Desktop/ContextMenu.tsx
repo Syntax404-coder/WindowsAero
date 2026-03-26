@@ -2,17 +2,15 @@
 
 import React from 'react';
 import styles from './ContextMenu.module.css';
-import {
-  Monitor,
-  RefreshCw,
-  FolderPlus,
-  FileText,
-  SortAsc,
-  Eye,
-  Settings,
-  Clipboard,
-  TerminalSquare
-} from 'lucide-react';
+
+import ViewIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON145_1.ico';
+import SortIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON165_1.ico';
+import RefreshIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON147_1.ico';
+import PasteIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON116_1.ico';
+import FolderIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON162_1.ico';
+import TermIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON150_1.ico';
+import MonitorIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON110_1.ico';
+import SettingsIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico';
 
 interface ContextMenuProps {
   x: number;
@@ -42,19 +40,28 @@ export default function ContextMenu({ x, y, onClose, onAction }: ContextMenuProp
       >
         {/* View */}
         <button className={styles.menuItem} onClick={() => handleItemClick('view')}>
-          <span className={styles.menuIcon}><Eye size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={ViewIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>View</span>
         </button>
 
         {/* Sort By */}
         <button className={styles.menuItem} onClick={() => handleItemClick('sort')}>
-          <span className={styles.menuIcon}><SortAsc size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={SortIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>Sort by</span>
         </button>
 
         {/* Refresh */}
         <button className={styles.menuItem} onClick={() => handleItemClick('refresh')}>
-          <span className={styles.menuIcon}><RefreshCw size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={RefreshIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>Refresh</span>
         </button>
 
@@ -62,14 +69,20 @@ export default function ContextMenu({ x, y, onClose, onAction }: ContextMenuProp
 
         {/* Paste */}
         <button className={`${styles.menuItem} ${styles.disabled}`}>
-          <span className={styles.menuIcon}><Clipboard size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={PasteIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>Paste</span>
           <span className={styles.menuShortcut}>Ctrl+V</span>
         </button>
 
         {/* Paste Shortcut */}
         <button className={`${styles.menuItem} ${styles.disabled}`}>
-          <span className={styles.menuIcon}><Clipboard size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={PasteIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>Paste Shortcut</span>
         </button>
 
@@ -77,7 +90,10 @@ export default function ContextMenu({ x, y, onClose, onAction }: ContextMenuProp
 
         {/* New */}
         <button className={styles.menuItem} onClick={() => handleItemClick('new-folder')}>
-          <span className={styles.menuIcon}><FolderPlus size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={FolderIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>New</span>
         </button>
 
@@ -85,13 +101,19 @@ export default function ContextMenu({ x, y, onClose, onAction }: ContextMenuProp
 
         {/* Open Terminal */}
         <button className={styles.menuItem} onClick={() => handleItemClick('terminal')}>
-          <span className={styles.menuIcon}><TerminalSquare size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={TermIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>Open Terminal</span>
         </button>
 
         {/* Screen Resolution */}
         <button className={styles.menuItem} onClick={() => handleItemClick('display')}>
-          <span className={styles.menuIcon}><Monitor size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={MonitorIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>Screen Resolution</span>
         </button>
 
@@ -99,7 +121,10 @@ export default function ContextMenu({ x, y, onClose, onAction }: ContextMenuProp
 
         {/* Personalize */}
         <button className={styles.menuItem} onClick={() => handleItemClick('personalize')}>
-          <span className={styles.menuIcon}><Settings size={14} /></span>
+          <span className={styles.menuIcon}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={SettingsIcon.src} width={14} height={14} alt="" />
+          </span>
           <span className={styles.menuLabel}>Personalize</span>
         </button>
       </div>

@@ -4,6 +4,8 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './StartMenu.module.css';
 import aeroStyles from '../../styles/AeroGlass.module.css';
+import MatchPointIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
+import KaonTaIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 
 interface StartMenuProps {
   isOpen: boolean;
@@ -53,14 +55,20 @@ export default function StartMenu({ isOpen, onProgramClick, onSystemClick }: Sta
             <div className={styles.leftPane}>
               <div className={styles.programsList}>
                 <button className={styles.programItem} onClick={() => onProgramClick('matchpoint')}>
-                  <div className={styles.programIcon}>M</div>
+                  <div className={styles.programIcon}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={MatchPointIcon.src} width={32} height={32} alt="" style={{ objectFit: 'contain' }} />
+                  </div>
                   <div className={styles.programText}>
                     <div className={styles.programName}>MatchPoint</div>
                     <div className={styles.programDesc}>Desktop App</div>
                   </div>
                 </button>
                 <button className={styles.programItem} onClick={() => onProgramClick('kaonta')}>
-                  <div className={styles.programIcon}>K</div>
+                  <div className={styles.programIcon}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={KaonTaIcon.src} width={32} height={32} alt="" style={{ objectFit: 'contain' }} />
+                  </div>
                   <div className={styles.programText}>
                     <div className={styles.programName}>Kaon Ta!</div>
                     <div className={styles.programDesc}>Web Service</div>

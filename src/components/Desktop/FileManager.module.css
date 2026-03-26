@@ -1,0 +1,218 @@
+.fileManager {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  background: linear-gradient(180deg, #d8e5f8 0%, #b8cde8 100%);
+  border-bottom: 1px solid #8e9db3;
+  gap: 8px;
+}
+
+.navButtons {
+  display: flex;
+  gap: 4px;
+}
+
+.navBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #7a96b7;
+  background: linear-gradient(180deg, #eff4fc 0%, #c4d7ec 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.navBtn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #fff 0%, #d8e6f5 100%);
+  border-color: #6a8ab0;
+}
+
+.navBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.addressBarContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #8e9db3;
+  border-radius: 2px;
+  padding: 2px 4px;
+  height: 24px;
+  position: relative;
+}
+
+.addressIcon {
+  margin-right: 6px;
+  pointer-events: none;
+}
+
+.addressPath {
+  font-size: 12px;
+  color: #1e395b;
+  flex: 1;
+}
+
+.commandBar {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #f1f5fa 0%, #d5e1f0 100%);
+  border-bottom: 1px solid #a4b4ca;
+  padding: 4px 8px;
+  gap: 12px;
+  height: 32px;
+}
+
+.commandBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 11px;
+  color: #1e395b;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.commandBtn:hover {
+  background: rgba(255,255,255,0.6);
+  border-color: #b8cde8;
+}
+
+.mainArea {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.navigationPane {
+  width: 180px;
+  min-width: 180px;
+  background: #eef2f8;
+  border-right: 1px solid #c2d1e2;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  overflow-y: auto;
+}
+
+.navSection {
+  margin-bottom: 12px;
+}
+
+.navHeader {
+  font-weight: 600;
+  font-size: 11px;
+  color: #4b6680;
+  padding: 4px 12px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 20px;
+  font-size: 12px;
+  color: #1e395b;
+  cursor: pointer;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.navItem:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.navItem.active {
+  background: rgba(0,0,0,0.1);
+  font-weight: 600;
+}
+
+.navIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.contentPane {
+  flex: 1;
+  background: #ffffff;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 16px;
+}
+
+.fileItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  user-select: none;
+}
+
+.fileItem:hover {
+  background-color: #ddefe7; /* Soft aero blue hover */
+  border-color: #a3c9ea;
+}
+
+.fileItem:active {
+  background-color: #c4def6;
+  border-color: #87b2d5;
+}
+
+.fileIcon {
+  margin-bottom: 6px;
+  pointer-events: none;
+}
+
+.fileName {
+  font-size: 12px;
+  color: #000;
+  text-align: center;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.statusBar {
+  height: 22px;
+  background: #d4e0ef;
+  border-top: 1px solid #b8cde8;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 11px;
+  color: #1e395b;
+}
