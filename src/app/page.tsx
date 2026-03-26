@@ -10,13 +10,15 @@ import DesktopShortcut from '../components/Desktop/DesktopShortcut';
 import ContextMenu from '../components/Desktop/ContextMenu';
 import SystemProperties from '../components/Desktop/SystemProperties';
 import FileManager from '../components/Desktop/FileManager';
+import WebBrowser from '../components/Desktop/WebBrowser';
 
 import MatchPointIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
 import ComputerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import KaonTaIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import SystemIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico';
-import ResumeIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON19_1.ico';
+import ResumeIcon from '../assets/Icons/Windows Vista/ico/shell32.dll/ICON324_1.ico';
 import PortfolioIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico';
+import IEIcon from '../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1.ico';
 
 interface WindowState {
   id: string;
@@ -119,21 +121,7 @@ export default function Desktop() {
         break;
       case 'resume':
         openApp('resume', 'Resume - Nico (2026)', (
-          <div style={{padding: 20}}>
-            <h2 style={{margin: '0 0 8px', color: '#2e7d32'}}>Nico</h2>
-            <p style={{color: '#777', fontSize: 13, marginBottom: 16}}>Software Engineer — AI Major, WVSU 2026</p>
-            <div style={{display: 'flex', flexDirection: 'column', gap: 12}}>
-              <div style={{padding: 12, background: '#f0f5fa', borderRadius: 4, border: '1px solid #c8d6e5'}}>
-                <strong>Education:</strong> West Visayas State University — BS in Computer Science, AI Major
-              </div>
-              <div style={{padding: 12, background: '#f0f5fa', borderRadius: 4, border: '1px solid #c8d6e5'}}>
-                <strong>Focus Areas:</strong> Full Stack Development, DevOps, AI/ML Engineering
-              </div>
-              <div style={{padding: 12, background: '#f0f5fa', borderRadius: 4, border: '1px solid #c8d6e5'}}>
-                <strong>Tools:</strong> React, Next.js, TypeScript, Python, Docker, GitHub Actions
-              </div>
-            </div>
-          </div>
+          <WebBrowser initialUrl="https://nicotags.duckdns.org/" />
         ), <img src={ResumeIcon.src} width={16} height={16} alt="" />);
         break;
       case 'portfolio':
@@ -153,6 +141,11 @@ export default function Desktop() {
             </div>
           </div>
         ), <img src={PortfolioIcon.src} width={16} height={16} alt="" />);
+        break;
+      case 'internet':
+        openApp('internet', 'Internet Explorer', (
+          <WebBrowser />
+        ), <img src={IEIcon.src} width={16} height={16} alt="" />);
         break;
     }
   };

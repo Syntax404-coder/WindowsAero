@@ -5,6 +5,7 @@ import styles from './Taskbar.module.css';
 import aeroStyles from '../../styles/AeroGlass.module.css';
 import StartOrb from './StartOrb';
 import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON162_1.ico';
+import IEIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1.ico';
 
 interface WindowState {
   id: string;
@@ -57,6 +58,14 @@ export default function Taskbar({ windows, onWindowClick, onStartClick, isStartO
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={ExplorerIcon.src} width={24} height={24} alt="File Explorer" style={{ objectFit: 'contain' }} />
+          </button>
+          <button 
+            className={styles.quickLaunchBtn} 
+            onClick={(e) => onQuickLaunch('internet', e)}
+            title="Internet Explorer"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={IEIcon.src} width={24} height={24} alt="Internet Explorer" style={{ objectFit: 'contain' }} />
           </button>
         </div>
       )}
