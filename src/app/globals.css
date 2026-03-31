@@ -21,13 +21,13 @@
   --aero-radius: 8px;
   --aero-radius-sm: 4px;
   --aero-text-color: #000000;
-  --aero-text-text: #ffffff;
+  --aero-text-text: #000000;
   
   --aero-close-bg: linear-gradient(180deg, rgba(255,120,100,0.95) 0%, rgba(230,70,50,0.90) 45%, rgba(200,40,30,0.90) 50%, rgba(180,30,20,0.95) 100%);
   --aero-close-hover: linear-gradient(180deg, rgba(255,160,140,1) 0%, rgba(255,100,80,0.95) 45%, rgba(240,60,40,0.95) 50%, rgba(220,50,35,1) 100%);
   --aero-start-gradient: radial-gradient(circle at 35% 30%, #6dd5f5 0%, #2a8ee6 30%, #1560b8 55%, #0a3478 80%, #001945 100%);
   
-  --aero-taskbar-bg: rgba(0, 8, 20, 0.72);
+  --aero-taskbar-bg: rgba(0, 8, 20, 0.78);
   --aero-menu-bg: linear-gradient(180deg, rgba(200, 220, 240, 0.30) 0%, rgba(160, 185, 215, 0.28) 48%, rgba(120, 155, 195, 0.30) 50%, rgba(100, 140, 185, 0.32) 100%);
   --aero-menu-hover: linear-gradient(180deg, rgba(180, 215, 255, 0.45) 0%, rgba(140, 190, 250, 0.35) 100%);
   --aero-focus-bg: rgba(60, 130, 230, 0.30);

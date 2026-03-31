@@ -75,7 +75,7 @@ export default function Window({
             x: isMaximized ? 0 : defaultPosition.x,
             y: isMaximized ? 0 : defaultPosition.y,
             width: isMaximized ? '100vw' : '800px',
-            height: isMaximized ? 'calc(100vh - 48px)' : '500px'
+            height: isMaximized ? 'calc(100vh - 40px)' : '500px'
           }}
         >
           {/* Title Bar */}

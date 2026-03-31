@@ -1,207 +1,353 @@
 .startMenu {
   position: absolute;
-  bottom: 48px;
+  bottom: 40px;
   left: 0;
-  width: 380px;
-  height: 500px;
+  width: 420px;
   display: flex;
   flex-direction: column;
   z-index: 9998;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  border-radius: 8px 8px 0 0;
+  background: rgba(0, 8, 20, 0.01);
+  backdrop-filter: blur(30px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-bottom: none;
+  box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255,255,255,0.3);
+  overflow: hidden;
+  user-select: none;
 }
 
+/* ── Profile Header ── */
 .profileHeader {
-  height: 64px;
+  height: 54px;
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(200,225,255,0.2) 100%);
-  border-top-left-radius: calc(var(--aero-radius) - 1px);
-  border-top-right-radius: calc(var(--aero-radius) - 1px);
+  padding: 8px 10px;
+  gap: 10px;
+  background: linear-gradient(180deg, rgba(80, 140, 210, 0.7) 0%, rgba(40, 90, 160, 0.8) 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   position: relative;
-  z-index: 1;
+}
+
+.profileHeader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
 }
 
 .profileAvatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
+  width: 44px;
+  height: 44px;
+  border-radius: 3px;
   background: white;
   padding: 2px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-  border: 1px solid rgba(100, 150, 200, 0.4);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  flex-shrink: 0;
 }
 
 .avatarInner {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #1560b8, #6dd5f5);
-  border-radius: 2px;
-}
-
-.profileInfo {
-  display: flex;
-  flex-direction: column;
+  background: linear-gradient(135deg, #4a90d9, #1a5fb4, #6dd5f5);
+  border-radius: 1px;
 }
 
 .profileName {
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.profileTitle {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 11px;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.6);
-}
-
+/* ── Panes Container ── */
 .panesContainer {
   display: flex;
   flex: 1;
-  background: rgba(255, 255, 255, 0.95);
-  margin: 0 1px;
 }
 
-/* Left Pane */
+/* ── Left Pane ── */
 .leftPane {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: #ffffff;
 }
 
 .programsList {
   flex: 1;
-  padding: 8px;
+  padding: 4px 2px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  overflow-y: auto;
+  max-height: 370px;
 }
 
 .programItem {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px;
+  gap: 8px;
+  padding: 4px 6px;
   background: transparent;
   border: 1px solid transparent;
   width: 100%;
   text-align: left;
-  border-radius: 4px;
+  border-radius: 3px;
   cursor: pointer;
-  transition: all 0.1s ease;
+  transition: all 0.08s ease;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .programItem:hover {
-  background: rgba(200, 230, 255, 0.4);
-  border-color: rgba(150, 200, 255, 0.6);
+  background: linear-gradient(180deg, #3c7fb1 0%, #245d94 100%);
+  border-color: #2a6cb7;
+  color: white;
 }
 
-.programIcon {
+.programItem:hover .programName,
+.programItem:hover .programDesc {
+  color: #fff;
+}
+
+.programImg {
   width: 32px;
   height: 32px;
-  background: linear-gradient(180deg, #f0f5fa, #d2e1f0);
-  border: 1px solid #a0b4c8;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: #1560b8;
-  font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .programText {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .programName {
-  font-weight: 600;
-  font-size: 13px;
-  color: #333;
+  font-weight: 400;
+  font-size: 12px;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .programDesc {
   font-size: 11px;
-  color: #777;
+  color: #888;
 }
 
+.programSeparator {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 4px 8px;
+}
+
+/* All Programs */
 .allPrograms {
-  padding: 8px;
+  padding: 4px 6px;
   border-top: 1px solid #e0e0e0;
 }
 
 .allProgramsBtn {
   width: 100%;
-  text-align: left;
+  text-align: right;
   background: transparent;
   border: none;
   font-weight: 600;
-  font-size: 13px;
-  color: #333;
+  font-size: 12px;
+  color: #1a4a8a;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 8px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 6px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.allProgramsArrow {
+  font-size: 8px;
 }
 
 .allProgramsBtn:hover {
-  background: rgba(200, 230, 255, 0.4);
+  background: linear-gradient(180deg, #3c7fb1 0%, #245d94 100%);
+  color: #fff;
 }
 
-/* Right Pane */
+/* ── Right Pane ── */
 .rightPane {
-  width: 140px;
-  background: var(--aero-menu-bg);
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: inset 1px 0 0 rgba(255,255,255,0.8);
-  padding: 8px;
+  width: 180px;
+  background: linear-gradient(180deg, rgba(200, 220, 240, 0.55) 0%, rgba(170, 195, 225, 0.6) 48%, rgba(145, 175, 210, 0.65) 50%, rgba(130, 165, 205, 0.7) 100%);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: inset 1px 0 0 rgba(255,255,255,0.4);
+  padding: 6px 4px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 1px;
 }
 
 .systemLink {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   background: transparent;
   border: 1px solid transparent;
   width: 100%;
   text-align: left;
-  padding: 6px 8px;
-  border-radius: 4px;
+  padding: 5px 8px;
+  border-radius: 3px;
   cursor: pointer;
   color: #000;
   font-size: 12px;
   font-weight: 600;
-  transition: all 0.1s ease;
+  font-family: 'Segoe UI', sans-serif;
+  transition: all 0.08s ease;
 }
 
 .systemLink:hover {
-  background: rgba(255, 255, 255, 0.6);
-  border-color: rgba(255, 255, 255, 0.8);
-  box-shadow: inset 0 0 4px rgba(255,255,255,1);
+  background: linear-gradient(180deg, #3c7fb1 0%, #245d94 100%);
+  border-color: #2a6cb7;
+  color: #fff;
 }
 
-.systemDesc {
+.systemLink img {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.submenuArrow {
+  margin-left: auto;
   font-size: 10px;
-  font-weight: 400;
-  color: #444;
-  margin-top: 2px;
+  color: #666;
+}
+
+.systemLink:hover .submenuArrow {
+  color: #fff;
 }
 
 .separator {
   height: 1px;
   background: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.5);
-  margin: 4px 6px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  margin: 4px 8px;
+}
+
+/* ── Shutdown Footer ── */
+.shutdownFooter {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  background: linear-gradient(180deg, #4a94d1 0%, #2968a5 50%, #1e5690 51%, #2a6fb0 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+}
+
+.footerBtn {
+  width: 28px;
+  height: 24px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.footerBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.searchInput {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 3px 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  font-style: italic;
+  outline: none;
+  width: 130px;
+  height: 24px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.searchInput:focus {
+  background: #fff;
+  color: #000;
+  border-color: rgba(255, 255, 255, 0.6);
+  font-style: normal;
+}
+
+.searchInput:focus::placeholder {
+  color: #aaa;
+}
+
+.footerRight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.powerBtn {
+  width: 28px;
+  height: 24px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.powerBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.shutdownBtn {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  cursor: pointer;
+  color: white;
+  font-size: 11px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.shutdownBtn:hover {
+  background: rgba(255, 80, 60, 0.7);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.shutdownArrow {
+  font-size: 8px;
+  margin-left: 2px;
 }

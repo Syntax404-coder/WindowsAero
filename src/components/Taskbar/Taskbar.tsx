@@ -87,7 +87,19 @@ export default function Taskbar({ windows, onWindowClick, onStartClick, isStartO
       {/* System Tray Area */}
       <div className={styles.systemTray}>
         <div className={styles.trayIcons}>
-          {/* Generic Network / Audio icons could go here */}
+          {/* Network */}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{opacity: 0.7}}>
+            <path d="M5 12.55a11 11 0 0114.08 0" />
+            <path d="M1.42 9a16 16 0 0121.16 0" />
+            <path d="M8.53 16.11a6 6 0 016.95 0" />
+            <line x1="12" y1="20" x2="12.01" y2="20" />
+          </svg>
+          {/* Volume */}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{opacity: 0.7}}>
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="rgba(255,255,255,0.3)" />
+            <path d="M19.07 4.93a10 10 0 010 14.14" />
+            <path d="M15.54 8.46a5 5 0 010 7.07" />
+          </svg>
         </div>
         <div className={styles.clock}>
           {time}

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styles from './page.module.css';
 import Window from '../components/Desktop/Window';
 import Taskbar from '../components/Taskbar/Taskbar';
@@ -11,6 +11,7 @@ import ContextMenu from '../components/Desktop/ContextMenu';
 import SystemProperties from '../components/Desktop/SystemProperties';
 import FileManager from '../components/Desktop/FileManager';
 import WebBrowser from '../components/Desktop/WebBrowser';
+import BubblesScreensaver from '../components/Desktop/BubblesScreensaver';
 
 import MatchPointIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
 import ComputerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
@@ -39,6 +40,34 @@ export default function Desktop() {
   const [windows, setWindows] = useState<WindowState[]>([]);
   const [startOpen, setStartOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<ContextMenuState>({ visible: false, x: 0, y: 0 });
+  const [isIdle, setIsIdle] = useState(false);
+
+  /* ── Idle Detection ── */
+  useEffect(() => {
+    let idleTimer: NodeJS.Timeout;
+    const IDLE_TIME = 60000; // 1 minute for production feel
+
+    const resetIdle = () => {
+      setIsIdle(false);
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => setIsIdle(true), IDLE_TIME);
+    };
+
+    window.addEventListener('mousemove', resetIdle);
+    window.addEventListener('mousedown', resetIdle);
+    window.addEventListener('keydown', resetIdle);
+    window.addEventListener('touchstart', resetIdle);
+
+    idleTimer = setTimeout(() => setIsIdle(true), IDLE_TIME);
+
+    return () => {
+      window.removeEventListener('mousemove', resetIdle);
+      window.removeEventListener('mousedown', resetIdle);
+      window.removeEventListener('keydown', resetIdle);
+      window.removeEventListener('touchstart', resetIdle);
+      clearTimeout(idleTimer);
+    };
+  }, []);
 
   const focusWindow = (id: string) => {
     setWindows(prev => prev.map(win => ({
@@ -262,6 +291,9 @@ export default function Desktop() {
           onQuickLaunch={handleAppLaunch}
         />
       </div>
+
+      {/* Screensaver Overlay */}
+      {isIdle && <BubblesScreensaver />}
     </main>
   );
 }

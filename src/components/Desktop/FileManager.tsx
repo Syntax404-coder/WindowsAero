@@ -50,7 +50,7 @@ const fileSystem: FileSystemDict = {
   'Documents': [
     { id: 'resume', name: 'Resume', type: 'app', iconSrc: ResumeIcon.src, targetId: 'resume' }
   ],
-  'Pictures': [
+  'Images': [
     { id: 'portfolio', name: 'Portfolio.jpeg', type: 'app', iconSrc: PicIcon.src, targetId: 'portfolio' }
   ],
   'Music': [],
@@ -101,6 +101,12 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
     }
   };
 
+  const navigateToLevel = (index: number) => {
+    const parts = currentPath.split(' > ');
+    const newPath = parts.slice(0, index + 1).join(' > ');
+    navigateTo(newPath);
+  };
+
   const getPathIcon = () => {
     if (currentPath === 'Documents') return DocIcon.src;
     if (currentPath === 'Images') return PicIcon.src;
@@ -108,6 +114,8 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
     if (currentPath === 'This PC') return ComputerIcon.src;
     return FolderIcon.src;
   };
+
+  const pathParts = currentPath.split(' > ');
 
   return (
     <div className={styles.fileManager}>
@@ -144,11 +152,27 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
           <div className={styles.addressBarContainer}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={getPathIcon()} width={16} height={16} alt="" className={styles.addressIcon} />
-            <span className={styles.addressPath}>{currentPath.replace(/ > /g, ' ▸ ')}</span>
+            <div className={styles.breadcrumbList}>
+              {pathParts.map((part, index) => (
+                <React.Fragment key={index}>
+                  <div className={styles.breadcrumbItem} onClick={() => navigateToLevel(index)}>
+                    {part}
+                  </div>
+                  {index < pathParts.length - 1 && (
+                    <div className={styles.breadcrumbChevron}>▸</div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+            <div className={styles.addressRefresh}>
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#555" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+              </svg>
+            </div>
           </div>
           
           <div className={styles.searchBox}>
-            <img src={SearchIcon.src} width={14} height={14} alt="" />
+            <img src={SearchIcon.src} width={14} height={14} alt="" className={styles.searchIcon} />
             <input type="text" className={styles.searchInput} placeholder="Search" />
           </div>
         </div>
