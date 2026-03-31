@@ -9,8 +9,8 @@ import styles from './StartMenu.module.css';
 import IEIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1.ico';
 import MailIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON131_1.ico';
 import MediaIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
-import PhotoIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON113_1.ico';
-import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON162_1.ico';
+import PhotoIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON68_1.ico';
+import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON73_1.ico';
 import NotepadIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON103_1.ico';
 import CalcIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON100_1.ico';
 import ResumeIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON324_1.ico';
@@ -190,7 +190,7 @@ export default function StartMenu({ isOpen, onProgramClick, onSystemClick, custo
             {/* Right Pane - System Links */}
             <div className={styles.rightPane}>
               {/* Profile Name */}
-              <div className={styles.profileName}>mobusr</div>
+              <div className={styles.profileName}>Nico</div>
 
               <div className={styles.systemLinksContainer}>
                 <button className={styles.systemLink} onClick={() => onSystemClick('resume')}>

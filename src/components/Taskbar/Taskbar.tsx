@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Taskbar.module.css';
 import aeroStyles from '../../styles/AeroGlass.module.css';
 import StartOrb from './StartOrb';
-import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON162_1.ico';
+import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON73_1.ico';
 import IEIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1.ico';
 
 interface WindowState {
