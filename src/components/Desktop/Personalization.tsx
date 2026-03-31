@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-require-imports */
 "use client";
 
 import React, { useState } from 'react';
@@ -125,6 +126,7 @@ export default function Personalization({
                   className={`${styles.wallpaperThumb} ${currentWallpaper === wp.id ? styles.wallpaperActive : ''}`}
                   onClick={() => onWallpaperChange(wp.id)}
                 >
+                  {/* eslint-disable-next-line @typescript-eslint/no-require-imports */}
                   <img
                     src={require(`../../assets/Wallpapers/Windows Vista/Desktop/${wp.id}.jpg`).default.src}
                     alt={wp.id}

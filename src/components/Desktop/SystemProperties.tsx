@@ -53,7 +53,7 @@ const skills = [
 ];
 
 export default function SystemProperties({ onClose }: SystemPropertiesProps) {
-  const [activeTab, setActiveTab] = useState(1); // Certifications by default
+  const [activeTab, setActiveTab] = useState(0); // General by default
 
   return (
     <div className={styles.systemProperties}>
