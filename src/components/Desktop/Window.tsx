@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './Window.module.css';
 import aeroStyles from '../../styles/AeroGlass.module.css';
-import { X, Square, Minus } from 'lucide-react'; // Wait, let's use exact SVGs if preferred, but lucide-react works
+import { X, Square, Minus, Copy } from 'lucide-react';
 
 interface WindowProps {
   id: string;
@@ -65,15 +65,31 @@ export default function Window({
           drag={!isMaximized}
           dragMomentum={false}
           initial={{ ...variants.closed, x: defaultPosition.x, y: defaultPosition.y }}
-          animate={{ ...variants.open, x: isMaximized ? 0 : undefined, y: isMaximized ? 0 : undefined }}
+          animate={isMaximized
+            ? { opacity: 1, scale: 1, x: 0, y: 0 }
+            : { ...variants.open }
+          }
           exit="closed"
           variants={variants}
           onMouseDown={onFocus}
+          onDoubleClick={(e) => {
+            const target = e.target as HTMLElement;
+            if (target.closest(`.${styles.controls}`) || target.closest(`.${styles.contentArea}`)) return;
+            toggleMaximize();
+          }}
           className={`${styles.windowContainer} ${aeroStyles.glass} ${isFocused ? styles.focused : ''} ${isMaximized ? styles.maximized : ''}`}
-          style={{
+          style={isMaximized ? {
             zIndex: isFocused ? 100 : 10,
-            width: isMaximized ? '100vw' : '800px',
-            height: isMaximized ? 'calc(100vh - 40px)' : '500px'
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: 'calc(100vh - 40px)',
+            transform: 'none !important' as unknown as string,
+          } : {
+            zIndex: isFocused ? 100 : 10,
+            width: '800px',
+            height: '500px',
           }}
         >
           {/* Title Bar */}
@@ -97,7 +113,8 @@ export default function Window({
                 onClick={(e) => { e.stopPropagation(); toggleMaximize(); }}
                 onMouseDown={(e) => e.stopPropagation()}
               >
-                <Square size={12} />
+              <Square size={12} />
+              {isMaximized && <Copy size={10} style={{ position: 'absolute' }} />}
               </button>
               <button 
                 className={`${styles.controlBtn} ${styles.closeBtn}`} 

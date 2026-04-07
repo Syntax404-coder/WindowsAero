@@ -13,6 +13,9 @@
 }
 
 .maximized {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
   border-radius: 0 !important;
   border: none !important;
 }

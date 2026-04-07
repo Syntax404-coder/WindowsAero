@@ -12,12 +12,15 @@ import SystemProperties from '../components/Desktop/SystemProperties';
 import FileManager from '../components/Desktop/FileManager';
 import WebBrowser from '../components/Desktop/WebBrowser';
 import BubblesScreensaver from '../components/Desktop/BubblesScreensaver';
+import PhotoViewer from '../components/Desktop/PhotoViewer';
 import Personalization from '../components/Desktop/Personalization';
 import IconPicker from '../components/Desktop/IconPicker';
 
 import MatchPointIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
 import ComputerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import ExplorerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON10_1.ico';
+import PhotoGalleryIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON146_1.ico';
+import PicIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON113_1.ico';
 import KaonTaIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import SystemIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico';
 import ResumeIcon from '../assets/Icons/Windows Vista/ico/shell32.dll/ICON324_1.ico';
@@ -357,15 +360,28 @@ export default function Desktop() {
   }, [currentWallpaper, currentColorIndex, transparency, colorIntensity]);
 
   const handleAppLaunch = useCallback((id: string) => {
+    if (id.startsWith('photoviewer-')) {
+      const imgId = id.replace('photoviewer-', '');
+      openApp(id, 'Windows Photo Viewer', (
+        <PhotoViewer initialImageId={imgId} />
+      ), <img src={PicIcon.src} width={16} height={16} alt="" />);
+      return;
+    }
+
     switch(id) {
+      case 'photogallery':
+        openApp('photogallery', 'Windows Photo Gallery', (
+          <PhotoViewer initialImageId="1" />
+        ), <img src={PhotoGalleryIcon.src} width={16} height={16} alt="" />);
+        break;
       case 'computer':
         openApp('computer', 'This PC', (
-          <FileManager onAppLaunch={(appId: string) => handleAppLaunch(appId)} />
+          <FileManager onAppLaunch={(appId: string) => handleAppLaunch(appId)} customIcons={customIconsMap} />
         ), <img src={customIconsMap['computer'] || ComputerIcon.src} width={16} height={16} alt="" />);
         break;
       case 'explorer':
         openApp('explorer', 'Windows Explorer', (
-          <FileManager onAppLaunch={(appId: string) => handleAppLaunch(appId)} />
+          <FileManager onAppLaunch={(appId: string) => handleAppLaunch(appId)} customIcons={customIconsMap} />
         ), <img src={customIconsMap['explorer'] || ExplorerIcon.src} width={16} height={16} alt="" />);
         break;
       case 'matchpoint':

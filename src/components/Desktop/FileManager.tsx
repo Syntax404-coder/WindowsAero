@@ -56,7 +56,8 @@ const fileSystem: FileSystemDict = {
   'Images > Wallpapers': Array.from({ length: 41 }, (_, i) => ({
     id: `wp${i+1}`,
     name: `img${i+1}.jpg`,
-    type: 'file',
+    type: 'app',
+    targetId: `photoviewer-img${i+1}`,
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     iconSrc: require(`../../assets/Wallpapers/Windows Vista/Desktop/img${i+1}.jpg`).default.src
   })),
@@ -68,9 +69,10 @@ const fileSystem: FileSystemDict = {
 
 interface FileManagerProps {
   onAppLaunch: (appId: string) => void;
+  customIcons?: Record<string, string>;
 }
 
-export default function FileManager({ onAppLaunch }: FileManagerProps) {
+export default function FileManager({ onAppLaunch, customIcons = {} }: FileManagerProps) {
   const [currentPath, setCurrentPath] = useState<string>('This PC');
   const [history, setHistory] = useState<string[]>(['This PC']);
   const [historyIndex, setHistoryIndex] = useState<number>(0);
@@ -98,7 +100,10 @@ export default function FileManager({ onAppLaunch }: FileManagerProps) {
     }
   };
 
-  const files = fileSystem[currentPath] || [];
+  const files = (fileSystem[currentPath] || []).map(file => ({
+    ...file,
+    iconSrc: (file.targetId && customIcons[file.targetId]) ? customIcons[file.targetId] : file.iconSrc
+  }));
 
   const handleItemDoubleClick = (item: FileItem) => {
     if (item.type === 'folder') {

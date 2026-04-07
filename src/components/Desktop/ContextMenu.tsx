@@ -3,12 +3,6 @@
 import React from 'react';
 import styles from './ContextMenu.module.css';
 
-import ViewIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON145_1.ico';
-import SortIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON165_1.ico';
-import RefreshIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON147_1.ico';
-import PasteIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON116_1.ico';
-import FolderIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON162_1.ico';
-import TermIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON150_1.ico';
 import MonitorIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON110_1.ico';
 import SettingsIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico';
 

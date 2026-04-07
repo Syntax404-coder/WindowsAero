@@ -9,7 +9,7 @@ import styles from './StartMenu.module.css';
 import IEIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1.ico';
 import MailIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON131_1.ico';
 import MediaIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
-import PhotoIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON68_1.ico';
+import PhotoGalleryIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON146_1.ico';
 import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON220_1.ico';
 import NotepadIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON103_1.ico';
 import CalcIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON100_1.ico';
@@ -140,10 +140,10 @@ export default function StartMenu({ isOpen, onProgramClick, onSystemClick, custo
                   </button>
                   <button 
                     className={styles.programItem}
-                    onClick={() => onProgramClick('skills')}
-                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('skills', customIcons['skills'] || PhotoIcon.src, e.clientX, e.clientY); }}
+                    onClick={() => onProgramClick('photogallery')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('photogallery', customIcons['photogallery'] || PhotoGalleryIcon.src, e.clientX, e.clientY); }}
                   >
-                    <img src={customIcons['skills'] || PhotoIcon.src} width={32} height={32} alt="" className={styles.programImg} />
+                    <img src={customIcons['photogallery'] || PhotoGalleryIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>Windows Photo Gallery</div>
                     </div>
@@ -181,8 +181,8 @@ export default function StartMenu({ isOpen, onProgramClick, onSystemClick, custo
                   <button className={styles.allProgramsItem} onClick={() => onProgramClick('explorer')}>
                     <img src={customIcons['explorer'] || ExplorerIcon.src} width={24} height={24} alt="" /> Windows Explorer
                   </button>
-                  <button className={styles.allProgramsItem} onClick={() => onProgramClick('skills')}>
-                    <img src={customIcons['skills'] || PhotoIcon.src} width={24} height={24} alt="" /> Windows Photo Gallery
+                  <button className={styles.allProgramsItem} onClick={() => onProgramClick('photogallery')}>
+                    <img src={customIcons['photogallery'] || PhotoGalleryIcon.src} width={24} height={24} alt="" /> Windows Photo Gallery
                   </button>
                   <button className={styles.allProgramsItem}>
                     <img src={NotepadIcon.src} width={24} height={24} alt="" /> Notepad
