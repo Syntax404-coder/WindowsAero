@@ -10,7 +10,7 @@ import IEIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1
 import MailIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON131_1.ico';
 import MediaIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
 import PhotoIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON68_1.ico';
-import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON73_1.ico';
+import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON220_1.ico';
 import NotepadIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON103_1.ico';
 import CalcIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON100_1.ico';
 import ResumeIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON324_1.ico';
@@ -32,10 +32,17 @@ interface StartMenuProps {
   onProgramClick: (programId: string) => void;
   onSystemClick: (systemId: string) => void;
   customIcons: Record<string, string>;
+  onContextMenu: (id: string, iconSrc: string, mouseX: number, mouseY: number) => void;
 }
 
-export default function StartMenu({ isOpen, onProgramClick, onSystemClick, customIcons }: StartMenuProps) {
+export default function StartMenu({ isOpen, onProgramClick, onSystemClick, customIcons, onContextMenu }: StartMenuProps) {
   const [showAllPrograms, setShowAllPrograms] = useState(false);
+
+  React.useEffect(() => {
+    if (!isOpen) {
+      setShowAllPrograms(false);
+    }
+  }, [isOpen]);
 
   const variants = {
     closed: {
@@ -72,15 +79,24 @@ export default function StartMenu({ isOpen, onProgramClick, onSystemClick, custo
             <div className={styles.leftPane}>
               {!showAllPrograms ? (
                 <div className={styles.programsList}>
-                  <button className={styles.programItem} onClick={() => onProgramClick('internet')}>
+                  {/* Pinned Programs */}
+                  <button 
+                    className={styles.programItem} 
+                    onClick={() => onProgramClick('internet')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('internet', customIcons['internet'] || IEIcon.src, e.clientX, e.clientY); }}
+                  >
                     <img src={customIcons['internet'] || IEIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>Internet</div>
                       <div className={styles.programDesc}>Internet Explorer</div>
                     </div>
                   </button>
-                  <button className={styles.programItem} onClick={() => onProgramClick('resume')}>
-                    <img src={customIcons['resume'] || MailIcon.src} width={32} height={32} alt="" className={styles.programImg} />
+                  <button 
+                    className={styles.programItem}
+                    onClick={() => onProgramClick('mail')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('mail', customIcons['mail'] || MailIcon.src, e.clientX, e.clientY); }}
+                  >
+                    <img src={customIcons['mail'] || MailIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>E-mail</div>
                       <div className={styles.programDesc}>Windows Mail</div>
@@ -89,46 +105,64 @@ export default function StartMenu({ isOpen, onProgramClick, onSystemClick, custo
 
                   <div className={styles.programSeparator} />
 
-                  <button className={styles.programItem} onClick={() => onProgramClick('resume')}>
-                    <img src={customIcons['resume'] || ResumeIcon.src} width={32} height={32} alt="" className={styles.programImg} />
-                    <div className={styles.programText}>
-                      <div className={styles.programName}>Resume</div>
-                      <div className={styles.programDesc}>Online Portfolio</div>
-                    </div>
-                  </button>
-                  <button className={styles.programItem} onClick={() => onProgramClick('matchpoint')}>
+                  {/* Frequently used */}
+                  <button 
+                    className={styles.programItem}
+                    onClick={() => onProgramClick('matchpoint')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('matchpoint', customIcons['matchpoint'] || MediaIcon.src, e.clientX, e.clientY); }}
+                  >
                     <img src={customIcons['matchpoint'] || MediaIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>MatchPoint</div>
                       <div className={styles.programDesc}>Desktop App</div>
                     </div>
                   </button>
-                  <button className={styles.programItem} onClick={() => onProgramClick('kaonta')}>
+                  <button 
+                    className={styles.programItem}
+                    onClick={() => onProgramClick('kaonta')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('kaonta', customIcons['kaonta'] || ComputerIcon.src, e.clientX, e.clientY); }}
+                  >
                     <img src={customIcons['kaonta'] || ComputerIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>Kaon Ta!</div>
                       <div className={styles.programDesc}>Web Service</div>
                     </div>
                   </button>
-                  <button className={styles.programItem} onClick={() => onProgramClick('explorer')}>
+                  <button 
+                    className={styles.programItem}
+                    onClick={() => onProgramClick('explorer')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('explorer', customIcons['explorer'] || ExplorerIcon.src, e.clientX, e.clientY); }}
+                  >
                     <img src={customIcons['explorer'] || ExplorerIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>Windows Explorer</div>
                     </div>
                   </button>
-                  <button className={styles.programItem} onClick={() => onProgramClick('skills')}>
+                  <button 
+                    className={styles.programItem}
+                    onClick={() => onProgramClick('skills')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('skills', customIcons['skills'] || PhotoIcon.src, e.clientX, e.clientY); }}
+                  >
                     <img src={customIcons['skills'] || PhotoIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>Windows Photo Gallery</div>
                     </div>
                   </button>
-                  <button className={styles.programItem}>
+                  <button 
+                    className={styles.programItem}
+                    onClick={() => onProgramClick('notepad')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('notepad', customIcons['notepad'] || NotepadIcon.src, e.clientX, e.clientY); }}
+                  >
                     <img src={NotepadIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>Notepad</div>
                     </div>
                   </button>
-                  <button className={styles.programItem}>
+                  <button 
+                    className={styles.programItem}
+                    onClick={() => onProgramClick('calculator')}
+                    onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); onContextMenu('calculator', customIcons['calculator'] || CalcIcon.src, e.clientX, e.clientY); }}
+                  >
                     <img src={CalcIcon.src} width={32} height={32} alt="" className={styles.programImg} />
                     <div className={styles.programText}>
                       <div className={styles.programName}>Calculator</div>

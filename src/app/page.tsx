@@ -146,15 +146,16 @@ export default function Desktop() {
   // Desktop icons state
   const [desktopIcons, setDesktopIcons] = useState<DesktopIcon[]>(DEFAULT_ICONS_RESOLVED);
   const [selectedIcons, setSelectedIcons] = useState<string[]>([]);
+  const [globalCustomIcons, setGlobalCustomIcons] = useState<Record<string, string>>({});
 
   // Derived map of appId -> iconSrc for the whole system
   const customIconsMap = useMemo(() => {
-    const map: Record<string, string> = {};
+    const map: Record<string, string> = { ...globalCustomIcons };
     desktopIcons.forEach(icon => {
       map[icon.id] = icon.iconSrc;
     });
     return map;
-  }, [desktopIcons]);
+  }, [desktopIcons, globalCustomIcons]);
 
   // Icon context menu & picker state
   const [iconContextMenu, setIconContextMenu] = useState<IconContextMenuState>({ visible: false, x: 0, y: 0, iconId: '', iconSrc: '' });
@@ -201,6 +202,13 @@ export default function Desktop() {
         if (Array.isArray(parsed) && parsed.length > 0) {
           setDesktopIcons(parsed);
         }
+      } catch (e) { console.error('Failed to parse desktop icons', e); }
+    }
+
+    const savedGlobalIcons = localStorage.getItem('aero-custom-icons');
+    if (savedGlobalIcons) {
+      try {
+        setGlobalCustomIcons(JSON.parse(savedGlobalIcons));
       } catch { /* ignore parse errors */ }
     }
 
@@ -410,13 +418,15 @@ export default function Desktop() {
         break;
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openPersonalize]);
+  }, [openPersonalize, customIconsMap]);
 
   /* ── Right-click handler ── */
   const handleContextMenu = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     setStartOpen(false);
-    setContextMenu({ visible: true, x: e.clientX, y: e.clientY });
+    const clampedX = typeof window !== 'undefined' ? Math.min(e.clientX, window.innerWidth - 200) : e.clientX;
+    const clampedY = typeof window !== 'undefined' ? Math.min(e.clientY, window.innerHeight - 250) : e.clientY;
+    setContextMenu({ visible: true, x: clampedX, y: clampedY });
   }, []);
 
   const handleContextAction = useCallback((action: string) => {
@@ -458,7 +468,9 @@ export default function Desktop() {
 
   const handleIconContextMenu = useCallback((id: string, iconSrc: string, mouseX: number, mouseY: number) => {
     setContextMenu({ visible: false, x: 0, y: 0 });
-    setIconContextMenu({ visible: true, x: mouseX, y: mouseY, iconId: id, iconSrc });
+    const clampedX = typeof window !== 'undefined' ? Math.min(mouseX, window.innerWidth - 200) : mouseX;
+    const clampedY = typeof window !== 'undefined' ? Math.min(mouseY, window.innerHeight - 200) : mouseY;
+    setIconContextMenu({ visible: true, x: clampedX, y: clampedY, iconId: id, iconSrc });
   }, []);
 
   const handleChangeIconRequest = useCallback(() => {
@@ -469,6 +481,14 @@ export default function Desktop() {
 
   const handleIconSelect = useCallback((newSrc: string) => {
     if (!iconPickerTarget) return;
+
+    // Update global mappings across the board
+    setGlobalCustomIcons(prev => {
+      const next = { ...prev, [iconPickerTarget]: newSrc };
+      localStorage.setItem('aero-custom-icons', JSON.stringify(next));
+      return next;
+    });
+
     setDesktopIcons(prev => {
       const updated = prev.map(icon => icon.id === iconPickerTarget ? { ...icon, iconSrc: newSrc } : icon);
       localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
@@ -556,6 +576,7 @@ export default function Desktop() {
           onProgramClick={handleAppLaunch} 
           onSystemClick={handleAppLaunch}
           customIcons={customIconsMap}
+          onContextMenu={handleIconContextMenu}
         />
         
         <Taskbar
@@ -575,6 +596,8 @@ export default function Desktop() {
             toggleStartMenu();
           }}
           onQuickLaunch={handleAppLaunch}
+          customIcons={customIconsMap}
+          onContextMenu={handleIconContextMenu}
         />
       </div>
 

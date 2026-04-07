@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Taskbar.module.css';
 import aeroStyles from '../../styles/AeroGlass.module.css';
 import StartOrb from './StartOrb';
-import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON73_1.ico';
+import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON220_1.ico';
 import IEIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1.ico';
 
 interface WindowState {
@@ -21,9 +21,11 @@ interface TaskbarProps {
   onStartClick: (e: React.MouseEvent) => void;
   isStartOpen: boolean;
   onQuickLaunch?: (id: string, e: React.MouseEvent) => void;
+  customIcons?: Record<string, string>;
+  onContextMenu?: (id: string, iconSrc: string, mouseX: number, mouseY: number) => void;
 }
 
-export default function Taskbar({ windows, onWindowClick, onStartClick, isStartOpen, onQuickLaunch }: TaskbarProps) {
+export default function Taskbar({ windows, onWindowClick, onStartClick, isStartOpen, onQuickLaunch, customIcons, onContextMenu }: TaskbarProps) {
   const [time, setTime] = useState<string>('');
 
   useEffect(() => {
@@ -54,18 +56,32 @@ export default function Taskbar({ windows, onWindowClick, onStartClick, isStartO
           <button 
             className={styles.quickLaunchBtn} 
             onClick={(e) => onQuickLaunch('explorer', e)}
+            onContextMenu={(e) => {
+              if (onContextMenu) {
+                e.preventDefault();
+                e.stopPropagation();
+                onContextMenu('explorer', customIcons?.['explorer'] || ExplorerIcon.src, e.clientX, e.clientY);
+              }
+            }}
             title="File Explorer"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ExplorerIcon.src} width={24} height={24} alt="File Explorer" style={{ objectFit: 'contain' }} />
+            <img src={customIcons?.['explorer'] || ExplorerIcon.src} width={24} height={24} alt="File Explorer" style={{ objectFit: 'contain' }} />
           </button>
           <button 
             className={styles.quickLaunchBtn} 
             onClick={(e) => onQuickLaunch('internet', e)}
+            onContextMenu={(e) => {
+              if (onContextMenu) {
+                e.preventDefault();
+                e.stopPropagation();
+                onContextMenu('internet', customIcons?.['internet'] || IEIcon.src, e.clientX, e.clientY);
+              }
+            }}
             title="Internet Explorer"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={IEIcon.src} width={24} height={24} alt="Internet Explorer" style={{ objectFit: 'contain' }} />
+            <img src={customIcons?.['internet'] || IEIcon.src} width={24} height={24} alt="Internet Explorer" style={{ objectFit: 'contain' }} />
           </button>
         </div>
       )}

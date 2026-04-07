@@ -64,16 +64,14 @@ export default function Window({
           data-id={id}
           drag={!isMaximized}
           dragMomentum={false}
-          initial="closed"
-          animate="open"
+          initial={{ ...variants.closed, x: defaultPosition.x, y: defaultPosition.y }}
+          animate={{ ...variants.open, x: isMaximized ? 0 : undefined, y: isMaximized ? 0 : undefined }}
           exit="closed"
           variants={variants}
           onMouseDown={onFocus}
           className={`${styles.windowContainer} ${aeroStyles.glass} ${isFocused ? styles.focused : ''} ${isMaximized ? styles.maximized : ''}`}
           style={{
             zIndex: isFocused ? 100 : 10,
-            x: isMaximized ? 0 : defaultPosition.x,
-            y: isMaximized ? 0 : defaultPosition.y,
             width: isMaximized ? '100vw' : '800px',
             height: isMaximized ? 'calc(100vh - 40px)' : '500px'
           }}
@@ -112,7 +110,7 @@ export default function Window({
           </div>
           
           {/* Content Area */}
-          <div className={styles.contentArea}>
+          <div className={styles.contentArea} onPointerDownCapture={(e) => e.stopPropagation()}>
             {children}
           </div>
         </motion.div>
