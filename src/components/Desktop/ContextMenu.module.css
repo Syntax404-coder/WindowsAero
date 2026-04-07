@@ -103,3 +103,18 @@
   color: #aaa !important;
   border-color: transparent !important;
 }
+
+.submenuParent {
+  position: relative;
+}
+
+.menuItemActive {
+  background: linear-gradient(180deg, #3c8ee8 0%, #2a6fc9 100%);
+  color: #fff;
+  border-color: rgba(30, 80, 160, 0.6);
+  border-radius: 2px;
+}
+
+.menuItemActive .menuShortcut {
+  color: rgba(255,255,255,0.7);
+}

@@ -95,7 +95,6 @@ export default function Window({
           {/* Title Bar */}
           <div className={`${aeroStyles.titleBar} ${!isFocused ? aeroStyles.titleBarInactive : ''}`}>
             <div className={styles.titleInfo}>
-              {icon && <span className={styles.icon}>{icon}</span>}
               <span className={styles.titleText}>{title}</span>
             </div>
             

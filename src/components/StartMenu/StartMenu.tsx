@@ -9,7 +9,7 @@ import styles from './StartMenu.module.css';
 import IEIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1.ico';
 import MailIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON131_1.ico';
 import MediaIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
-import PhotoGalleryIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON146_1.ico';
+import PhotoGalleryIcon from '../../assets/Icons/Windows_Photo_Gallery.png';
 import ExplorerIcon from '../../assets/Icons/Windows Vista/ico/shell32.dll/ICON220_1.ico';
 import NotepadIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON103_1.ico';
 import CalcIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON100_1.ico';

@@ -19,7 +19,7 @@ import IconPicker from '../components/Desktop/IconPicker';
 import MatchPointIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
 import ComputerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import ExplorerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON10_1.ico';
-import PhotoGalleryIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON146_1.ico';
+import PhotoGalleryIcon from '../assets/Icons/Windows_Photo_Gallery.png';
 import PicIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON113_1.ico';
 import KaonTaIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import SystemIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico';
@@ -27,6 +27,8 @@ import ResumeIcon from '../assets/Icons/Windows Vista/ico/shell32.dll/ICON324_1.
 import PortfolioIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico';
 import IEIcon from '../assets/Icons/Windows Vista/ico/shell32.dll/ICON16744_1.ico';
 import SettingsIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON151_1.ico';
+import FolderIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON162_1.ico';
+import ShortcutIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON165_1.ico';
 
 // Import all wallpapers statically
 import wp1 from '../assets/Wallpapers/Windows Vista/Desktop/img1.jpg';
@@ -469,10 +471,36 @@ export default function Desktop() {
       case 'personalize':
         handleAppLaunch('personalize');
         break;
+      case 'new-folder':
+        setDesktopIcons(prev => {
+          const updated = [...prev, {
+            id: `folder-${Date.now()}`,
+            name: 'New Folder',
+            iconSrc: FolderIcon.src,
+            x: contextMenu.x,
+            y: contextMenu.y
+          }];
+          localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
+          return updated;
+        });
+        break;
+      case 'new-shortcut':
+        setDesktopIcons(prev => {
+          const updated = [...prev, {
+            id: `shortcut-${Date.now()}`,
+            name: 'New Shortcut',
+            iconSrc: ShortcutIcon.src,
+            x: contextMenu.x,
+            y: contextMenu.y
+          }];
+          localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
+          return updated;
+        });
+        break;
       default:
         break;
     }
-  }, [handleAppLaunch]);
+  }, [handleAppLaunch, contextMenu]);
 
   const handleDesktopClick = () => {
     setStartOpen(false);
