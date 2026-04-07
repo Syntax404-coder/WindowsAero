@@ -235,6 +235,23 @@ export default function Desktop() {
   /* ── Idle Detection (perf-optimized: ref avoids re-renders on every mousemove) ── */
   const isIdleRef = useRef(false);
   useEffect(() => {
+    // Also handle Delete key press globally
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Delete') {
+        setSelectedIcons(currentSelected => {
+          if (currentSelected.length > 0) {
+            setDesktopIcons(prev => {
+              const updated = prev.filter(icon => !currentSelected.includes(icon.id));
+              localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
+              return updated;
+            });
+            return [];
+          }
+          return currentSelected;
+        });
+      }
+    };
+
     let idleTimer: NodeJS.Timeout;
     const IDLE_TIME = 60000;
 
@@ -253,6 +270,7 @@ export default function Desktop() {
     window.addEventListener('mousemove', resetIdle);
     window.addEventListener('mousedown', resetIdle);
     window.addEventListener('keydown', resetIdle);
+    window.addEventListener('keydown', handleGlobalKeyDown);
     window.addEventListener('touchstart', resetIdle);
 
     idleTimer = setTimeout(() => {
@@ -264,6 +282,7 @@ export default function Desktop() {
       window.removeEventListener('mousemove', resetIdle);
       window.removeEventListener('mousedown', resetIdle);
       window.removeEventListener('keydown', resetIdle);
+      window.removeEventListener('keydown', handleGlobalKeyDown);
       window.removeEventListener('touchstart', resetIdle);
       clearTimeout(idleTimer);
     };
@@ -708,6 +727,22 @@ export default function Desktop() {
               onMouseEnter={(e) => { (e.target as HTMLElement).style.background = '#3399ff'; (e.target as HTMLElement).style.color = '#fff'; }}
               onMouseLeave={(e) => { (e.target as HTMLElement).style.background = 'transparent'; (e.target as HTMLElement).style.color = '#000'; }}
             >Change Icon...</button>
+            <div style={{ height: 1, background: '#ddd', margin: '3px 0' }} />
+            <button
+              style={{ display: 'block', width: '100%', textAlign: 'left', padding: '5px 24px', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit' }}
+              onClick={() => {
+                setDesktopIcons(prev => {
+                  const toDelete = new Set(selectedIcons.includes(iconContextMenu.iconId) ? selectedIcons : [iconContextMenu.iconId]);
+                  const updated = prev.filter(icon => !toDelete.has(icon.id));
+                  localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
+                  return updated;
+                });
+                setIconContextMenu({ visible: false, x: 0, y: 0, iconId: '', iconSrc: '' });
+                setSelectedIcons([]);
+              }}
+              onMouseEnter={(e) => { (e.target as HTMLElement).style.background = '#3399ff'; (e.target as HTMLElement).style.color = '#fff'; }}
+              onMouseLeave={(e) => { (e.target as HTMLElement).style.background = 'transparent'; (e.target as HTMLElement).style.color = '#000'; }}
+            >Delete</button>
           </div>
         </div>
       )}
