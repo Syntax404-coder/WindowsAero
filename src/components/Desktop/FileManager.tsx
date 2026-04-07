@@ -20,7 +20,7 @@ import SearchIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON18
 import PublicIcon from '../../assets/Icons/Windows Vista/ico/imageres.dll/ICON30_1.ico';
 
 // Define the file system types
-type FileType = 'folder' | 'app';
+type FileType = 'folder' | 'app' | 'file';
 
 interface FileItem {
   id: string;
@@ -51,8 +51,15 @@ const fileSystem: FileSystemDict = {
     { id: 'resume', name: 'Resume', type: 'app', iconSrc: ResumeIcon.src, targetId: 'resume' }
   ],
   'Images': [
-    { id: 'portfolio', name: 'Portfolio.jpeg', type: 'app', iconSrc: PicIcon.src, targetId: 'portfolio' }
+    { id: 'wallpapers', name: 'Wallpapers', type: 'folder', iconSrc: FolderIcon.src }
   ],
+  'Images > Wallpapers': Array.from({ length: 41 }, (_, i) => ({
+    id: `wp${i+1}`,
+    name: `img${i+1}.jpg`,
+    type: 'file',
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    iconSrc: require(`../../assets/Wallpapers/Windows Vista/Desktop/img${i+1}.jpg`).default.src
+  })),
   'Music': [],
   'Recently Changed': [],
   'Searches': [],

@@ -40,28 +40,21 @@ export default function ContextMenu({ x, y, onClose, onAction }: ContextMenuProp
       >
         {/* View */}
         <button className={styles.menuItem} onClick={() => handleItemClick('view')}>
-          <span className={styles.menuIcon}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ViewIcon.src} width={14} height={14} alt="" />
-          </span>
+          <span className={styles.menuIcon}></span>
           <span className={styles.menuLabel}>View</span>
+          <span className={styles.menuShortcut}>▸</span>
         </button>
 
         {/* Sort By */}
         <button className={styles.menuItem} onClick={() => handleItemClick('sort')}>
-          <span className={styles.menuIcon}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={SortIcon.src} width={14} height={14} alt="" />
-          </span>
+          <span className={styles.menuIcon}></span>
           <span className={styles.menuLabel}>Sort by</span>
+          <span className={styles.menuShortcut}>▸</span>
         </button>
 
         {/* Refresh */}
         <button className={styles.menuItem} onClick={() => handleItemClick('refresh')}>
-          <span className={styles.menuIcon}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={RefreshIcon.src} width={14} height={14} alt="" />
-          </span>
+          <span className={styles.menuIcon}></span>
           <span className={styles.menuLabel}>Refresh</span>
         </button>
 
@@ -69,42 +62,31 @@ export default function ContextMenu({ x, y, onClose, onAction }: ContextMenuProp
 
         {/* Paste */}
         <button className={`${styles.menuItem} ${styles.disabled}`}>
-          <span className={styles.menuIcon}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={PasteIcon.src} width={14} height={14} alt="" />
-          </span>
+          <span className={styles.menuIcon}></span>
           <span className={styles.menuLabel}>Paste</span>
           <span className={styles.menuShortcut}>Ctrl+V</span>
         </button>
 
         {/* Paste Shortcut */}
         <button className={`${styles.menuItem} ${styles.disabled}`}>
-          <span className={styles.menuIcon}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={PasteIcon.src} width={14} height={14} alt="" />
-          </span>
-          <span className={styles.menuLabel}>Paste Shortcut</span>
+          <span className={styles.menuIcon}></span>
+          <span className={styles.menuLabel}>Paste shortcut</span>
         </button>
 
         <div className={styles.separator} />
 
         {/* New */}
         <button className={styles.menuItem} onClick={() => handleItemClick('new-folder')}>
-          <span className={styles.menuIcon}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={FolderIcon.src} width={14} height={14} alt="" />
-          </span>
+          <span className={styles.menuIcon}></span>
           <span className={styles.menuLabel}>New</span>
+          <span className={styles.menuShortcut}>▸</span>
         </button>
 
         <div className={styles.separator} />
 
         {/* Open Terminal */}
         <button className={styles.menuItem} onClick={() => handleItemClick('terminal')}>
-          <span className={styles.menuIcon}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={TermIcon.src} width={14} height={14} alt="" />
-          </span>
+          <span className={styles.menuIcon}></span>
           <span className={styles.menuLabel}>Open Terminal</span>
         </button>
 

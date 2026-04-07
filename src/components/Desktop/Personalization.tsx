@@ -25,8 +25,8 @@ const COLOR_PRESETS = [
   { name: 'Frost', hue: 0, sat: 0, light: 80, hex: '#cccccc' },
 ];
 
-// Wallpaper list (all 36 images)
-const WALLPAPERS = Array.from({ length: 36 }, (_, i) => ({
+// Wallpaper list (all 41 images)
+const WALLPAPERS = Array.from({ length: 41 }, (_, i) => ({
   id: `img${i + 1}`,
   src: `/assets/Wallpapers/Windows Vista/Desktop/img${i + 1}.jpg`,
 }));

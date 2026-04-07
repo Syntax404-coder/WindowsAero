@@ -17,6 +17,7 @@ import IconPicker from '../components/Desktop/IconPicker';
 
 import MatchPointIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
 import ComputerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
+import ExplorerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON10_1.ico';
 import KaonTaIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
 import SystemIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON114_1.ico';
 import ResumeIcon from '../assets/Icons/Windows Vista/ico/shell32.dll/ICON324_1.ico';
@@ -61,6 +62,11 @@ import wp33 from '../assets/Wallpapers/Windows Vista/Desktop/img33.jpg';
 import wp34 from '../assets/Wallpapers/Windows Vista/Desktop/img34.jpg';
 import wp35 from '../assets/Wallpapers/Windows Vista/Desktop/img35.jpg';
 import wp36 from '../assets/Wallpapers/Windows Vista/Desktop/img36.jpg';
+import wp37 from '../assets/Wallpapers/Windows Vista/Desktop/img37.jpg';
+import wp38 from '../assets/Wallpapers/Windows Vista/Desktop/img38.jpg';
+import wp39 from '../assets/Wallpapers/Windows Vista/Desktop/img39.jpg';
+import wp40 from '../assets/Wallpapers/Windows Vista/Desktop/img40.jpg';
+import wp41 from '../assets/Wallpapers/Windows Vista/Desktop/img41.jpg';
 
 const wallpaperMap: Record<string, string> = {
   img1: wp1.src, img2: wp2.src, img3: wp3.src, img4: wp4.src,
@@ -72,6 +78,8 @@ const wallpaperMap: Record<string, string> = {
   img25: wp25.src, img26: wp26.src, img27: wp27.src, img28: wp28.src,
   img29: wp29.src, img30: wp30.src, img31: wp31.src, img32: wp32.src,
   img33: wp33.src, img34: wp34.src, img35: wp35.src, img36: wp36.src,
+  img37: wp37.src, img38: wp38.src, img39: wp39.src, img40: wp40.src,
+  img41: wp41.src,
 };
 
 interface WindowState {
@@ -106,7 +114,7 @@ interface IconContextMenuState {
 }
 
 const DEFAULT_ICONS: DesktopIcon[] = [
-  { id: 'explorer', name: 'This PC', iconSrc: '__ComputerIcon__', x: 10, y: 10 },
+  { id: 'computer', name: 'This PC', iconSrc: '__ComputerIcon__', x: 10, y: 10 },
   { id: 'skills', name: 'System\nProperties', iconSrc: '__SystemIcon__', x: 10, y: 100 },
   { id: 'resume', name: 'Resume', iconSrc: '__ResumeIcon__', x: 10, y: 195 },
 ];
@@ -200,7 +208,10 @@ export default function Desktop() {
       try {
         const parsed = JSON.parse(savedIcons) as DesktopIcon[];
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setDesktopIcons(parsed);
+          const migrated = parsed.map(icon => 
+            (icon.id === 'explorer' && icon.name === 'This PC') ? { ...icon, id: 'computer' } : icon
+          );
+          setDesktopIcons(migrated);
         }
       } catch (e) { console.error('Failed to parse desktop icons', e); }
     }
@@ -347,10 +358,15 @@ export default function Desktop() {
 
   const handleAppLaunch = useCallback((id: string) => {
     switch(id) {
-      case 'explorer':
-        openApp('explorer', 'This PC', (
+      case 'computer':
+        openApp('computer', 'This PC', (
           <FileManager onAppLaunch={(appId: string) => handleAppLaunch(appId)} />
-        ), <img src={customIconsMap['explorer'] || ComputerIcon.src} width={16} height={16} alt="" />);
+        ), <img src={customIconsMap['computer'] || ComputerIcon.src} width={16} height={16} alt="" />);
+        break;
+      case 'explorer':
+        openApp('explorer', 'Windows Explorer', (
+          <FileManager onAppLaunch={(appId: string) => handleAppLaunch(appId)} />
+        ), <img src={customIconsMap['explorer'] || ExplorerIcon.src} width={16} height={16} alt="" />);
         break;
       case 'matchpoint':
         openApp('matchpoint', 'MatchPoint', (
