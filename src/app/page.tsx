@@ -15,6 +15,10 @@ import BubblesScreensaver from '../components/Desktop/BubblesScreensaver';
 import PhotoViewer from '../components/Desktop/PhotoViewer';
 import Personalization from '../components/Desktop/Personalization';
 import IconPicker from '../components/Desktop/IconPicker';
+import Sidebar from '../components/Desktop/Sidebar';
+import Flip3D from '../components/Desktop/Flip3D';
+import UACPrompt from '../components/Desktop/UACPrompt';
+import WelcomeCenter from '../components/Desktop/WelcomeCenter';
 
 import MatchPointIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON130_1.ico';
 import ComputerIcon from '../assets/Icons/Windows Vista/ico/imageres.dll/ICON25_1.ico';
@@ -122,6 +126,7 @@ const DEFAULT_ICONS: DesktopIcon[] = [
   { id: 'computer', name: 'This PC', iconSrc: '__ComputerIcon__', x: 10, y: 10 },
   { id: 'skills', name: 'System\nProperties', iconSrc: '__SystemIcon__', x: 10, y: 100 },
   { id: 'resume', name: 'Resume', iconSrc: '__ResumeIcon__', x: 10, y: 195 },
+  { id: 'welcome', name: 'Welcome\nCenter', iconSrc: '__SystemIcon__', x: 10, y: 290 },
 ];
 
 /* ── Helper: Apply Aero color to CSS custom properties ── */
@@ -153,6 +158,8 @@ export default function Desktop() {
   const [mounted, setMounted] = useState(false);
   const [windows, setWindows] = useState<WindowState[]>([]);
   const [startOpen, setStartOpen] = useState(false);
+  const [isFlip3DOpen, setIsFlip3DOpen] = useState(false);
+  const [uacRequest, setUacRequest] = useState<{ programName: string, actionName: string, onContinue: () => void } | null>(null);
   const [contextMenu, setContextMenu] = useState<ContextMenuState>({ visible: false, x: 0, y: 0 });
   const [isIdle, setIsIdle] = useState(false);
 
@@ -237,15 +244,29 @@ export default function Desktop() {
   useEffect(() => {
     // Also handle Delete key press globally
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // Toggle Flip3D
+      if ((e.ctrlKey && e.key === 'Tab') || (e.metaKey && e.key === 'Tab')) {
+        e.preventDefault();
+        setIsFlip3DOpen(prev => !prev);
+      }
+      
       if (e.key === 'Delete') {
+        if (isIdleRef.current) return;
+        
         setSelectedIcons(currentSelected => {
           if (currentSelected.length > 0) {
-            setDesktopIcons(prev => {
-              const updated = prev.filter(icon => !currentSelected.includes(icon.id));
-              localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
-              return updated;
+            setUacRequest({
+              programName: 'Windows Desktop Manager',
+              actionName: `Delete ${currentSelected.length} item(s)`,
+              onContinue: () => {
+                setDesktopIcons(prev => {
+                  const updated = prev.filter(icon => !currentSelected.includes(icon.id));
+                  localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
+                  return updated;
+                });
+                setSelectedIcons([]);
+              }
             });
-            return [];
           }
           return currentSelected;
         });
@@ -466,12 +487,25 @@ export default function Desktop() {
           <WebBrowser />
         ), <img src={customIconsMap['internet'] || IEIcon.src} width={16} height={16} alt="" />);
         break;
+      case 'welcome':
+        openApp('welcome', 'Welcome Center', (
+          <WelcomeCenter onLaunch={handleAppLaunch} />
+        ), <img src={customIconsMap['welcome'] || ComputerIcon.src} width={16} height={16} alt="" />);
+        break;
       case 'personalize':
         openPersonalize();
         break;
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openPersonalize, customIconsMap]);
+
+  // Launch Welcome Center automatically on first boot
+  useEffect(() => {
+    if (mounted && !sessionStorage.getItem('aero-welcome-seen')) {
+      handleAppLaunch('welcome');
+      sessionStorage.setItem('aero-welcome-seen', 'true');
+    }
+  }, [mounted, handleAppLaunch]);
 
   /* ── Right-click handler ── */
   const handleContextMenu = useCallback((e: React.MouseEvent) => {
@@ -680,8 +714,33 @@ export default function Desktop() {
         />
       </div>
 
+      {/* Windows Vista Sidebar */}
+      <Sidebar />
+
+      {/* Windows Flip 3D */}
+      {isFlip3DOpen && (
+        <Flip3D 
+          windows={windows.filter(w => !w.isMinimized)} 
+          onSelect={(id) => { focusWindow(id); setIsFlip3DOpen(false); }} 
+          onClose={() => setIsFlip3DOpen(false)} 
+        />
+      )}
+
       {/* Screensaver Overlay */}
       {isIdle && <BubblesScreensaver />}
+
+      {/* UAC Secure Desktop Prompt */}
+      {uacRequest && (
+        <UACPrompt
+          programName={uacRequest.programName}
+          actionName={uacRequest.actionName}
+          onContinue={() => {
+            uacRequest.onContinue();
+            setUacRequest(null);
+          }}
+          onCancel={() => setUacRequest(null)}
+        />
+      )}
 
       {/* Icon Right-Click Context Menu */}
       {iconContextMenu.visible && (
@@ -731,14 +790,20 @@ export default function Desktop() {
             <button
               style={{ display: 'block', width: '100%', textAlign: 'left', padding: '5px 24px', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit' }}
               onClick={() => {
-                setDesktopIcons(prev => {
-                  const toDelete = new Set(selectedIcons.includes(iconContextMenu.iconId) ? selectedIcons : [iconContextMenu.iconId]);
-                  const updated = prev.filter(icon => !toDelete.has(icon.id));
-                  localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
-                  return updated;
+                setUacRequest({
+                  programName: 'Windows Desktop Manager',
+                  actionName: 'Delete item(s)',
+                  onContinue: () => {
+                    setDesktopIcons(prev => {
+                      const toDelete = new Set(selectedIcons.includes(iconContextMenu.iconId) ? selectedIcons : [iconContextMenu.iconId]);
+                      const updated = prev.filter(icon => !toDelete.has(icon.id));
+                      localStorage.setItem('aero-desktop-icons', JSON.stringify(updated));
+                      return updated;
+                    });
+                    setSelectedIcons([]);
+                  }
                 });
                 setIconContextMenu({ visible: false, x: 0, y: 0, iconId: '', iconSrc: '' });
-                setSelectedIcons([]);
               }}
               onMouseEnter={(e) => { (e.target as HTMLElement).style.background = '#3399ff'; (e.target as HTMLElement).style.color = '#fff'; }}
               onMouseLeave={(e) => { (e.target as HTMLElement).style.background = 'transparent'; (e.target as HTMLElement).style.color = '#000'; }}

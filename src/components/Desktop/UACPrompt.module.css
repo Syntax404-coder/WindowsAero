@@ -1,0 +1,133 @@
+.secureDesktop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: dimIn 0.3s ease-out;
+}
+
+@keyframes dimIn {
+  from { background: rgba(0, 0, 0, 0); }
+  to { background: rgba(0, 0, 0, 0.6); }
+}
+
+.dialog {
+  width: 500px;
+  background: #fff;
+  border: 1px solid #005599;
+  border-radius: 6px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+  font-family: "Segoe UI", Arial, sans-serif;
+  overflow: hidden;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.header {
+  background: linear-gradient(180deg, #1d69a6 0%, #154c79 100%);
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.closeBtn:hover {
+  background: red;
+}
+
+.content {
+  padding: 25px;
+  background: #f0f0f0;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.shield {
+  width: 48px;
+  height: 48px;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4zm0 2.2l7 3.1v4.7c0 4.19-2.73 8.35-7 9.6-4.27-1.25-7-5.41-7-9.6V7.3l7-3.1z' fill='%23e6b700'/%3E%3C/svg%3E") no-repeat center center;
+  background-size: contain;
+}
+
+.mainText {
+  color: #003399;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.subText {
+  color: #333;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.actionArea {
+  background: #fff;
+  padding: 15px 25px;
+  border-top: 1px solid #ccc;
+}
+
+.programDetails {
+  font-size: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 4px 15px;
+  background: linear-gradient(180deg, #f2f2f2 0%, #ebebeb 50%, #dddddd 51%, #cfcfcf 100%);
+  border: 1px solid #8f8f8f;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 12px;
+  min-width: 90px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.btn:hover {
+  background: linear-gradient(180deg, #eaf6fd 0%, #d9f0fc 50%, #bee6fd 51%, #a7d9f5 100%);
+  border-color: #3c7fb1;
+}
+
+.btn:active {
+  background: linear-gradient(180deg, #e5f4fc 0%, #c4e5f6 50%, #98d1ef 51%, #68b3db 100%);
+  border-color: #2c628b;
+}
+

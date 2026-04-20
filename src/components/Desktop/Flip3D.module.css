@@ -1,0 +1,74 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  overflow: hidden;
+}
+
+.windowWrapper {
+  position: absolute;
+  width: 600px;
+  height: 400px;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.windowWrapper:hover {
+  filter: brightness(1.1);
+}
+
+.glassFrame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: var(--aero-glass-bg);
+  border: 1px solid var(--aero-glass-border);
+  border-radius: var(--aero-radius);
+  box-shadow: var(--aero-shadow);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleBar {
+  height: 30px;
+  background: var(--aero-title-gradient);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  color: #000;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+  font-weight: 600;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.content {
+  flex: 1;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.contentBlocker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}

@@ -1,0 +1,124 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #fff;
+  user-select: none;
+}
+
+.hero {
+  background: linear-gradient(135deg, rgba(82, 168, 185, 0.2) 0%, rgba(100, 190, 210, 0.4) 50%, rgba(82, 168, 185, 0.2) 100%);
+  border-bottom: 1px solid #d4e7f3;
+  padding: 20px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroLeft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.heroLeft h1 {
+  margin: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: 400;
+  color: #003366;
+}
+
+.systemInfo {
+  display: flex;
+  gap: 20px;
+}
+
+.computerIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #005599 0%, #002244 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 32px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.specs {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  color: #333;
+}
+
+.heroRight {
+  width: 250px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.detailsLink {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.detailsLink:hover {
+  text-decoration: underline;
+}
+
+.grid {
+  flex: 1;
+  background: #fdfdfd;
+  padding: 20px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 60px;
+  row-gap: 15px;
+  column-gap: 40px;
+  overflow-y: auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.item:hover {
+  background: rgba(0, 150, 255, 0.1);
+  border: 1px solid rgba(0, 150, 255, 0.3);
+}
+
+.itemIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #5cbdff 0%, #006eb8 100%);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.itemText {
+  color: #003399;
+  font-size: 13px;
+}
